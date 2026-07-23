@@ -8,7 +8,7 @@
         "announcement-bar-0": {
           "type": "announcement",
           "settings": {
-            "text": "Welcome to our store",
+            "text": "🌿 100% PURE AYURVEDIC PAIN RELIEF OIL | 🚚 FREE SHIPPING & CASH ON DELIVERY (COD) ACROSS INDIA",
             "link": ""
           }
         }
@@ -17,7 +17,7 @@
         "announcement-bar-0"
       ],
       "settings": {
-        "color_scheme": "scheme-5",
+        "color_scheme": "scheme-4",
         "show_line_separator": false,
         "show_social": false,
         "auto_rotate": false,
