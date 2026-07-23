@@ -107,6 +107,9 @@
         <span class="price-item price-item--sale price-item--last">
           {{ money_price }}
         </span>
+        <span class="aayu-savings-badge">
+          Save 28% OFF
+        </span>
       </div>
       {%- if product.selected_or_first_available_variant.unit_price_measurement -%}
         {% render 'unit-price', price: product.selected_or_first_available_variant.unit_price, measurement: product.selected_or_first_available_variant.unit_price_measurement %}
