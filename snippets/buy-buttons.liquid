@@ -1,5 +1,5 @@
 {% comment %}
-  Renders product buy-buttons with Direct Checkout Prepaid CTA.
+  Renders product buy-buttons with Direct Checkout Prepaid CTA & Ultra Premium Color Grading.
 {% endcomment %}
 <div {{ block.shopify_attributes }}>
   {%- if product != blank -%}
@@ -79,8 +79,11 @@
             {% endif %}
           >
             <div class="btn-prepaid-content">
-              <span class="btn-prepaid-main">⚡ PAY ONLINE - GET INSTANT ₹100 OFF</span>
-              <span class="btn-prepaid-sub">(PREPAID OFFER: ₹100 DISCOUNT APPLIED)</span>
+              <div class="btn-prepaid-header">
+                <span class="btn-flash-icon">⚡</span>
+                <span class="btn-prepaid-main">PAY ONLINE - GET INSTANT ₹100 OFF</span>
+              </div>
+              <span class="btn-prepaid-sub">PREPAID OFFER: ₹100 DISCOUNT APPLIED AT CHECKOUT</span>
             </div>
             {%- render 'loading-spinner' -%}
           </button>
@@ -143,36 +146,81 @@
 </div>
 
 <style>
-  /* Prepaid Discount Button Highlight */
+  /* Ultra-Premium Color Graded Prepaid Discount Button */
   .btn-prepaid-highlight {
-    background: linear-gradient(135deg, #0e5a36 0%, #166534 100%) !important;
+    position: relative !important;
+    background: linear-gradient(135deg, #07341e 0%, #0e5a36 50%, #15803d 100%) !important;
     color: #ffffff !important;
     border: 2px solid #cca43b !important;
-    border-radius: 10px !important;
-    padding: 1rem 1.5rem !important;
-    box-shadow: 0 4px 15px rgba(14, 90, 54, 0.3) !important;
-    transition: transform 0.2s ease, background 0.2s ease !important;
+    border-radius: 12px !important;
+    padding: 1.1rem 1.6rem !important;
+    box-shadow: 0 8px 25px -4px rgba(14, 90, 54, 0.45), 0 0 15px rgba(204, 164, 59, 0.25) !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
     cursor: pointer;
+    overflow: hidden !important;
+  }
+  .btn-prepaid-highlight::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.25) 50%,
+      transparent 100%
+    );
+    transform: skewX(-25deg);
+    animation: btnShimmer 3.5s infinite;
+  }
+  @keyframes btnShimmer {
+    0% { left: -100%; }
+    30% { left: 180%; }
+    100% { left: 180%; }
   }
   .btn-prepaid-highlight:hover {
-    transform: translateY(-2px);
-    background: linear-gradient(135deg, #093f25 0%, #0e5a36 100%) !important;
+    transform: translateY(-3px) scale(1.005) !important;
+    background: linear-gradient(135deg, #042414 0%, #093f25 50%, #0e5a36 100%) !important;
+    border-color: #fef08a !important;
+    box-shadow: 0 12px 30px -4px rgba(14, 90, 54, 0.6), 0 0 20px rgba(204, 164, 59, 0.4) !important;
   }
   .btn-prepaid-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2px;
+    justify-content: center;
+    gap: 3px;
+    position: relative;
+    z-index: 2;
+  }
+  .btn-prepaid-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-flash-icon {
+    font-size: 1.8rem;
+    color: #fcd34d;
+    filter: drop-shadow(0 0 6px rgba(252, 211, 77, 0.6));
+    animation: pulse 1.5s infinite;
   }
   .btn-prepaid-main {
-    font-size: 1.55rem;
+    font-size: 1.6rem;
     font-weight: 800;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
     color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   }
   .btn-prepaid-sub {
     font-size: 1.15rem;
     font-weight: 700;
-    color: #cca43b;
+    color: #fef08a;
+    letter-spacing: 0.3px;
+    background: rgba(0, 0, 0, 0.25);
+    padding: 2px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(204, 164, 59, 0.4);
   }
 </style>
