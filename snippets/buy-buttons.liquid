@@ -1,5 +1,5 @@
 {% comment %}
-  Renders product buy-buttons with Direct Checkout Prepaid CTA, Black COD CTA, Delivery Ticker, and 48+ Herbal Trust Badges.
+  Renders product buy-buttons with Direct Checkout Prepaid CTA, Delivery Ticker, and 48+ Herbal Trust Badges.
 {% endcomment %}
 <div {{ block.shopify_attributes }}>
   {%- if product != blank -%}
@@ -64,7 +64,7 @@
             endif
           -%}
           
-          <!-- 1. Primary Prepaid Discount Button -> Direct Checkout (PAY ONLINE - GET INSTANT ₹100 OFF) -->
+          <!-- Primary Prepaid Discount Button -> Direct Checkout (PAY ONLINE - GET INSTANT ₹100 OFF) -->
           <button
             id="ProductSubmitButton-{{ section_id }}"
             type="submit"
@@ -84,19 +84,6 @@
             </div>
             {%- render 'loading-spinner' -%}
           </button>
-
-          <!-- 2. Sleek Jet Black COD Button (Order Now - Cash on Delivery) -->
-          {%- if product.selected_or_first_available_variant.available -%}
-            <button
-              type="submit"
-              name="add"
-              class="product-form__submit button button--full-width btn-black-cod"
-              onclick="document.getElementById('returnToCheckoutInput-{{ section_id }}').value='/cart'; this.form.setAttribute('data-is-cod', 'true');"
-            >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-              <span>Order Now - Cash on Delivery</span>
-            </button>
-          {%- endif -%}
 
           {%- if show_dynamic_checkout -%}
             {{ form | payment_button }}
@@ -218,27 +205,6 @@
     font-size: 1.15rem;
     font-weight: 700;
     color: #cca43b;
-  }
-  /* Jet Black COD Button (Order Now - Cash on Delivery) */
-  .btn-black-cod {
-    background: #000000 !important;
-    color: #ffffff !important;
-    font-size: 1.55rem !important;
-    font-weight: 700 !important;
-    border-radius: 8px !important;
-    border: none !important;
-    padding: 1.1rem 1.5rem !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 10px !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
-    transition: transform 0.2s ease, background 0.2s ease !important;
-    cursor: pointer;
-  }
-  .btn-black-cod:hover {
-    transform: translateY(-2px);
-    background: #1f2937 !important;
   }
   /* Delivery Ticker */
   .aayu-delivery-ticker {

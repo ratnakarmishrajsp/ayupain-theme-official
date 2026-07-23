@@ -28,6 +28,9 @@
             "show_dynamic_checkout": false
           }
         },
+        "app": {
+          "type": "@app"
+        },
         "description": {
           "type": "description",
           "settings": {}
@@ -55,6 +58,7 @@
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
+        "app",
         "description",
         "collapsible-row-1",
         "collapsible-row-0"
