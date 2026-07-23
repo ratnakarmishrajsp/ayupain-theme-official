@@ -1,59 +1,61 @@
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "hero_banner": {
+      "type": "custom-hero-banner",
+      "settings": {
+        "heading": "AyuPain™ Pain Relief Oil",
+        "button_label": "ORDER CASH ON DELIVERY (COD)",
+        "button_link": "/collections/all",
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    },
+    "usp_grid": {
+      "type": "custom-usp-grid",
       "blocks": {
-        "text": {
-          "type": "text",
+        "usp-1": {
+          "type": "usp",
           "settings": {
-            "text": "Welcome to our store",
-            "text_style": "caption-with-letter-spacing"
+            "title": "100% Ayurvedic Formula",
+            "description": "Certified 48+ herbal ingredients tested for maximum efficacy without side effects."
           }
         },
-        "heading": {
-          "type": "heading",
+        "usp-2": {
+          "type": "usp",
           "settings": {
-            "heading": "Shop our products",
-            "heading_size": "h1"
+            "title": "Fast Absorbing",
+            "description": "Non-greasy, fast-acting deep muscle penetration that starts working in minutes."
           }
         },
-        "button": {
-          "type": "buttons",
+        "usp-3": {
+          "type": "usp",
           "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "/collections/all",
-            "button_style_secondary_1": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "title": "Long Lasting Comfort",
+            "description": "Provides all-day joint mobility support and eases morning knee, back & shoulder stiffness."
+          }
+        },
+        "usp-4": {
+          "type": "usp",
+          "settings": {
+            "title": "Zero Mineral Oil & Chemicals",
+            "description": "Free from mineral oil, alcohol, and harmful synthetic toxins. Safe for all age groups."
           }
         }
       },
-      "block_order": [
-        "text",
-        "heading",
-        "button"
-      ],
+      "block_order": ["usp-1", "usp-2", "usp-3", "usp-4"],
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "small",
-        "desktop_content_position": "middle-left",
-        "show_text_box": false,
-        "desktop_content_alignment": "left",
-        "color_scheme": "scheme-5",
-        "image_behavior": "none",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": true,
-        "show_text_below": false
+        "sub_heading": "THE AAYU PAIN GUARANTEE",
+        "heading": "Why Thousands Trust AyuPain Relief Oil",
+        "bg_color": "#faf7f2"
       }
     },
     "featured_collection1": {
       "type": "featured-collection",
       "settings": {
-        "title": "Featured products",
+        "title": "AyuPain Relief Products",
         "heading_size": "h2",
-        "description": "",
-        "show_description": false,
+        "description": "100% Pure Ayurvedic Herbal Oils & Care",
+        "show_description": true,
         "description_style": "body",
         "collection": "all",
         "products_to_show": 8,
@@ -67,17 +69,60 @@
         "image_shape": "default",
         "show_secondary_image": false,
         "show_vendor": false,
-        "show_rating": false,
+        "show_rating": true,
         "quick_add": "none",
         "columns_mobile": "2",
         "swipe_on_mobile": false,
         "padding_top": 36,
         "padding_bottom": 52
       }
+    },
+    "patient_reviews": {
+      "type": "custom-patient-reviews",
+      "blocks": {
+        "rev-1": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_title": "Relief From Knee Pain in 7 Days!",
+            "comment": "I was suffering from severe knee stiffness for months. After massaging with AyuPain oil for 7 days, my pain has reduced drastically. Very effective!",
+            "author_name": "Ramesh Sharma",
+            "location": "Jaipur, Rajasthan"
+          }
+        },
+        "rev-2": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_title": "Best Back Pain Relief Oil",
+            "comment": "Working long hours caused chronic lower back ache. AyuPain oil absorbs quickly without stickiness and gives deep warmth and relief instantly.",
+            "author_name": "Sunita Verma",
+            "location": "Delhi NCR"
+          }
+        },
+        "rev-3": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_title": "A Blessing for Elderly Mobility",
+            "comment": "Bought this for my 68 year old father who had trouble climbing stairs. He applies it twice daily and feels great comfort in his joints.",
+            "author_name": "Vikram Patel",
+            "location": "Ahmedabad, Gujarat"
+          }
+        }
+      },
+      "block_order": ["rev-1", "rev-2", "rev-3"],
+      "settings": {
+        "sub_heading": "REAL PATIENT RECOVERIES",
+        "heading": "Loved By Over 10,000+ Customers",
+        "bg_color": "#ffffff"
+      }
     }
   },
   "order": [
-    "image_banner",
-    "featured_collection1"
+    "hero_banner",
+    "usp_grid",
+    "featured_collection1",
+    "patient_reviews"
   ]
 }

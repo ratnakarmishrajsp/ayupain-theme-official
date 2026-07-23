@@ -1,0 +1,229 @@
+{% comment %}
+  Aayu Pain - Premium Brand Hero Banner Section
+{% endcomment %}
+
+<div class="aayu-hero-section section-{{ section.id }}-padding">
+  <div class="page-width">
+    <div class="aayu-hero-wrapper">
+      {%- if section.settings.image != blank -%}
+        <div class="aayu-hero-media">
+          <img
+            srcset="{{ section.settings.image | image_url: width: 750 }} 750w, {{ section.settings.image | image_url: width: 1500 }} 1500w, {{ section.settings.image | image_url }} 2000w"
+            src="{{ section.settings.image | image_url: width: 1500 }}"
+            alt="{{ section.settings.heading | escape }}"
+            loading="eager"
+            width="{{ section.settings.image.width }}"
+            height="{{ section.settings.image.height }}"
+            class="aayu-hero-img"
+          >
+        </div>
+      {%- else -%}
+        <!-- High Quality Built-in AyuPain Banner Presentation -->
+        <div class="aayu-hero-banner-card">
+          <div class="aayu-banner-grid">
+            <div class="aayu-banner-text-col">
+              <span class="aayu-hero-subtag">🌿 100% NATURAL & AYURVEDIC FORMULA</span>
+              <h1 class="aayu-hero-title">AyuPain™ Pain Relief Oil</h1>
+              <p class="aayu-hero-hindi">आयुर्वेदिक दर्द राहत तेल - 100% आयुर्वेदिक</p>
+              <p class="aayu-hero-desc">Fast action deep penetration formula for Joint, Knee, Back, Shoulder & Muscle Pain Relief. Formulated with 48+ powerful herbal oils.</p>
+              
+              <div class="aayu-hero-bullets">
+                <div class="aayu-hero-bullet-item">✓ Fast Action Relief</div>
+                <div class="aayu-hero-bullet-item">✓ Deep Penetration</div>
+                <div class="aayu-hero-bullet-item">✓ No Chemicals & Side Effects</div>
+              </div>
+
+              <div class="aayu-hero-actions">
+                <a href="{{ section.settings.button_link }}" class="button button--primary aayu-hero-cta">
+                  {{ section.settings.button_label | default: "ORDER CASH ON DELIVERY (COD)" }}
+                </a>
+              </div>
+            </div>
+            
+            <div class="aayu-banner-features-col">
+              <div class="aayu-relief-pill">🦵 Knee Pain Relief</div>
+              <div class="aayu-relief-pill">🦴 Back Pain Relief</div>
+              <div class="aayu-relief-pill">💪 Shoulder & Neck Care</div>
+              <div class="aayu-relief-pill">🏃 Muscle Stiffness Relief</div>
+              <div class="aayu-relief-pill">✨ Joint & Arthritis Care</div>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  .aayu-hero-wrapper {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(14, 90, 54, 0.08);
+  }
+  .aayu-hero-media img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 16px;
+  }
+  .aayu-hero-banner-card {
+    background: linear-gradient(135deg, #093f25 0%, #0e5a36 60%, #166534 100%);
+    color: #ffffff;
+    padding: 3.5rem 3rem;
+    border-radius: 16px;
+    position: relative;
+    border: 2px solid #cca43b;
+  }
+  .aayu-banner-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 0.8fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media screen and (max-width: 850px) {
+    .aayu-banner-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    .aayu-hero-banner-card {
+      padding: 2.5rem 1.5rem;
+    }
+  }
+  .aayu-hero-subtag {
+    display: inline-block;
+    background: rgba(204, 164, 59, 0.2);
+    border: 1px solid #cca43b;
+    color: #cca43b;
+    font-size: 1.2rem;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 1.2rem;
+    letter-spacing: 1px;
+  }
+  .aayu-hero-title {
+    font-size: 3.6rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.15;
+  }
+  .aayu-hero-hindi {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #cca43b;
+    margin: 0 0 1.5rem 0;
+  }
+  .aayu-hero-desc {
+    font-size: 1.5rem;
+    color: #e5e7eb;
+    line-height: 1.6;
+    margin: 0 0 2rem 0;
+  }
+  .aayu-hero-bullets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 2.5rem;
+  }
+  .aayu-hero-bullet-item {
+    background: rgba(255,255,255,0.1);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+  .aayu-hero-cta {
+    background: linear-gradient(135deg, #cca43b 0%, #b38b2d 100%) !important;
+    color: #ffffff !important;
+    font-size: 1.5rem !important;
+    font-weight: 800 !important;
+    padding: 1.2rem 2.5rem !important;
+    border-radius: 8px !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(204, 164, 59, 0.4);
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .aayu-banner-features-col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .aayu-relief-pill {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(204, 164, 59, 0.3);
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Aayu Pain Hero Banner",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Banner Image (Upload your custom banner image here)"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "AyuPain™ Pain Relief Oil"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "ORDER CASH ON DELIVERY (COD)"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "Aayu Pain Hero Banner"
+    }
+  ]
+}
+{% endschema %}
