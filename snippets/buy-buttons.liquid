@@ -1,5 +1,5 @@
 {% comment %}
-  Renders product buy-buttons.
+  Renders product buy-buttons with Prepaid Discount CTA, Pulsing COD CTA, Estimated Delivery Ticker, and 48+ Herbal Trust Badges.
   Accepts:
   - product: {Object} product object.
   - block: {Object} passing the block information.
@@ -60,7 +60,7 @@
           {%- render 'gift-card-recipient-form', product: product, form: form, section: section -%}
         {%- endif -%}
 
-        <div class="product-form__buttons">
+        <div class="product-form__buttons" style="display: flex; flex-direction: column; gap: 12px;">
           {%- liquid
             assign check_against_inventory = true
             if product.selected_or_first_available_variant.inventory_management != 'shopify' or product.selected_or_first_available_variant.inventory_policy == 'continue'
@@ -70,11 +70,13 @@
               assign quantity_rule_soldout = true
             endif
           -%}
+          
+          <!-- Primary Prepaid Discount Button (PAY ONLINE - GET INSTANT ₹100 OFF) -->
           <button
             id="ProductSubmitButton-{{ section_id }}"
             type="submit"
             name="add"
-            class="product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
+            class="product-form__submit button button--full-width btn-prepaid-highlight"
             {% if product.selected_or_first_available_variant.available == false
               or quantity_rule_soldout
               or product.selected_or_first_available_variant == null
@@ -82,27 +84,22 @@
               disabled
             {% endif %}
           >
-            <span>
-              {%- if product.selected_or_first_available_variant == null -%}
-                {{ 'products.product.unavailable' | t }}
-              {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
-                {{ 'products.product.sold_out' | t }}
-              {%- else -%}
-                {{ 'products.product.add_to_cart' | t }}
-              {%- endif -%}
-            </span>
+            <div class="btn-prepaid-content">
+              <span class="btn-prepaid-main">⚡ PAY ONLINE - GET INSTANT ₹100 OFF</span>
+              <span class="btn-prepaid-sub">(PREPAID OFFER: ₹100 DISCOUNT APPLIED)</span>
+            </div>
             {%- render 'loading-spinner' -%}
           </button>
 
+          <!-- Cash on Delivery (COD) Order Button -->
           {%- if product.selected_or_first_available_variant.available -%}
             <button
               type="submit"
               name="add"
               class="product-form__submit button button--full-width btn-cod-pulsing"
-              style="margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;"
               onclick="this.form.setAttribute('data-is-cod', 'true');"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
               <span>ORDER CASH ON DELIVERY (कैश ऑन डिलीवरी)</span>
             </button>
           {%- endif -%}
@@ -113,37 +110,34 @@
         </div>
       {%- endform -%}
 
-      <!-- High-Demand Stock Scarcity Bar -->
-      <div class="aayu-stock-scarcity-bar" style="margin-top: 12px; background: #fffbf0; border: 1px solid #cca43b; padding: 8px 12px; border-radius: 8px; font-size: 1.25rem; font-weight: 700; color: #b38b2d; display: flex; align-items: center; gap: 8px;">
-        <span style="animation: pulse 1.5s infinite; color: #dc2626;">🔥</span>
-        <span>High Demand: Only 14 Bottles Left in Stock! 28 People Viewing This</span>
+      <!-- High Demand & Estimated Delivery Ticker -->
+      <div class="aayu-delivery-ticker">
+        <div class="aayu-ticker-row">
+          <span class="aayu-ticker-fire">🔥</span>
+          <span class="aayu-ticker-text"><strong>High Demand:</strong> Only 14 Bottles Left in Stock! 34 People Viewing Right Now</span>
+        </div>
+        <div class="aayu-ticker-row aayu-ticker-est">
+          <span>🚚 <strong>Estimated Delivery:</strong> 3 - 5 Business Days across India | Dispatched in 24 Hours</span>
+        </div>
       </div>
 
-      <!-- Aayu Pain Ayurvedic Trust Badges -->
+      <!-- AyuPain High-Contrast Trust Badges -->
       <div class="aayu-trust-badges">
         <div class="aayu-badge-item">
-          <div class="aayu-badge-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <span class="aayu-badge-label">Ayush Certified</span>
+          <div class="aayu-badge-icon">🌿</div>
+          <span class="aayu-badge-label">48+ Herbal Oils</span>
         </div>
         <div class="aayu-badge-item">
-          <div class="aayu-badge-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="M12 6v6l4 2"/></svg>
-          </div>
-          <span class="aayu-badge-label">Fast Pain Relief</span>
+          <div class="aayu-badge-icon">⚡</div>
+          <span class="aayu-badge-label">3-5 Mins Fast Action</span>
         </div>
         <div class="aayu-badge-item">
-          <div class="aayu-badge-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.5 10-10 10z"/></svg>
-          </div>
-          <span class="aayu-badge-label">100% Herbal</span>
+          <div class="aayu-badge-icon">🛡️</div>
+          <span class="aayu-badge-label">100% Ayurvedic</span>
         </div>
         <div class="aayu-badge-item">
-          <div class="aayu-badge-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-          </div>
-          <span class="aayu-badge-label">Free Shipping</span>
+          <div class="aayu-badge-icon">🚚</div>
+          <span class="aayu-badge-label">Free COD & Shipping</span>
         </div>
       </div>
     </product-form>
@@ -197,3 +191,122 @@
     <script src="{{ 'pickup-availability.js' | asset_url }}" defer="defer"></script>
   {%- endif -%}
 </div>
+
+<style>
+  /* Prepaid Discount Button Highlight */
+  .btn-prepaid-highlight {
+    background: linear-gradient(135deg, #0e5a36 0%, #166534 100%) !important;
+    color: #ffffff !important;
+    border: 2px solid #cca43b !important;
+    border-radius: 10px !important;
+    padding: 1rem 1.5rem !important;
+    box-shadow: 0 4px 15px rgba(14, 90, 54, 0.3) !important;
+    transition: transform 0.2s ease, background 0.2s ease !important;
+  }
+  .btn-prepaid-highlight:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #093f25 0%, #0e5a36 100%) !important;
+  }
+  .btn-prepaid-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  .btn-prepaid-main {
+    font-size: 1.55rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+  }
+  .btn-prepaid-sub {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #cca43b;
+  }
+  /* Pulsing COD Button */
+  .btn-cod-pulsing {
+    background: linear-gradient(135deg, #cca43b 0%, #b38b2d 100%) !important;
+    color: #ffffff !important;
+    font-size: 1.45rem !important;
+    font-weight: 800 !important;
+    border-radius: 10px !important;
+    border: none !important;
+    padding: 1.1rem 1.5rem !important;
+    animation: codPulse 2s infinite;
+  }
+  @keyframes codPulse {
+    0% { box-shadow: 0 0 0 0 rgba(204, 164, 59, 0.6); }
+    70% { box-shadow: 0 0 0 12px rgba(204, 164, 59, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(204, 164, 59, 0); }
+  }
+  /* Delivery Ticker */
+  .aayu-delivery-ticker {
+    margin-top: 14px;
+    background: #fffbf0;
+    border: 1px solid #cca43b;
+    border-radius: 10px;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .aayu-ticker-row {
+    font-size: 1.3rem;
+    color: #b38b2d;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .aayu-ticker-est {
+    font-size: 1.2rem;
+    color: #374151;
+    border-top: 1px dashed rgba(204, 164, 59, 0.4);
+    padding-top: 6px;
+  }
+  .aayu-ticker-fire {
+    animation: pulse 1.5s infinite;
+    color: #dc2626;
+  }
+  /* High-Contrast Trust Badges Grid */
+  .aayu-trust-badges {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 1.4rem;
+    padding: 1.2rem 1rem;
+    background: #faf7f2;
+    border: 1.5px solid rgba(204, 164, 59, 0.35);
+    border-radius: 12px;
+    text-align: center;
+  }
+  @media screen and (max-width: 640px) {
+    .aayu-trust-badges {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  .aayu-badge-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .aayu-badge-icon {
+    font-size: 2rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid rgba(204, 164, 59, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  }
+  .aayu-badge-label {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0e5a36;
+    line-height: 1.2;
+  }
+</style>

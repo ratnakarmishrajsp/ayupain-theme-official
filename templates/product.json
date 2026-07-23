@@ -35,9 +35,9 @@
         "collapsible-row-1": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "Ayurvedic Ingredients & Ayush Certification",
+            "heading": "Ayurvedic Ingredients & Purity Guarantee",
             "icon": "leaf",
-            "content": "Contains pure Mahanarayan Oil, Gandhapura (Wintergreen), Nilgiri (Eucalyptus), Kapur (Camphor), and Shallaki (Boswellia). Ayush Certified & 100% Herbal formulation."
+            "content": "Contains pure Mahanarayan Oil, Gandhapura (Wintergreen), Nilgiri (Eucalyptus), Kapur (Camphor), and Shallaki (Boswellia). 100% Herbal & Natural formulation."
           }
         },
         "collapsible-row-0": {
@@ -252,7 +252,7 @@
           "type": "faq",
           "settings": {
             "question": "Is it safe for daily use by elderly patients?",
-            "answer": "Yes, 100%! AyuPain Oil is 100% Ayurvedic, Ayush-Certified, free from mineral oil, alcohol, and harmful chemicals. It is safe for daily long-term use."
+            "answer": "Yes, 100%! AyuPain Oil is 100% Ayurvedic & Herbal, free from mineral oil, alcohol, and harmful chemicals. It is safe for daily long-term use."
           }
         },
         "faq-3": {
