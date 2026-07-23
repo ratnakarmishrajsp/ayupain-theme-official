@@ -1,5 +1,5 @@
 {% comment %}
-  Aayu Pain - 100% Full-Width Brand Hero Banner Section
+  Aayu Pain - 100% Full-Width Brand Hero Banner Section (Zero Gap)
 {% endcomment %}
 
 <div class="aayu-hero-section section-{{ section.id }}-padding">
@@ -55,6 +55,11 @@
 </div>
 
 <style>
+  .aayu-hero-section {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
