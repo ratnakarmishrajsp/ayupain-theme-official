@@ -2,7 +2,7 @@
   Aayu Pain - Ayurvedic Key Ingredients & Deep Penetration Formula Section
 {% endcomment %}
 
-<div class="aayu-ingredients-section section-{{ section.id }}-padding" style="background-color: {{ section.settings.bg_color }};">
+<div id="ingredients" class="aayu-ingredients-section section-{{ section.id }}-padding" style="background-color: {{ section.settings.bg_color }};">
   <div class="page-width">
     <div class="aayu-ingredients-header text-center">
       {% if section.settings.sub_heading != blank %}
@@ -38,6 +38,7 @@
   .aayu-ingredients-section {
     border-top: 1px solid rgba(204, 164, 59, 0.2);
     border-bottom: 1px solid rgba(204, 164, 59, 0.2);
+    scroll-margin-top: 80px;
   }
   .aayu-subheading {
     display: inline-block;

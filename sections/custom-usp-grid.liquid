@@ -2,7 +2,7 @@
   Aayu Pain - Custom USP Grid (4 Pillars of Relief)
 {% endcomment %}
 
-<div class="aayu-usp-section section-{{ section.id }}-padding" style="background-color: {{ section.settings.bg_color }};">
+<div id="usp" class="aayu-usp-section section-{{ section.id }}-padding" style="background-color: {{ section.settings.bg_color }};">
   <div class="page-width">
     <div class="aayu-usp-header text-center">
       {% if section.settings.sub_heading != blank %}
@@ -41,6 +41,7 @@
   .aayu-usp-section {
     border-top: 1px solid rgba(204, 164, 59, 0.2);
     border-bottom: 1px solid rgba(204, 164, 59, 0.2);
+    scroll-margin-top: 80px;
   }
   .aayu-subheading {
     display: inline-block;

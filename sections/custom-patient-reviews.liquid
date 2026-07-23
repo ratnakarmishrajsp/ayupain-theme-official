@@ -2,7 +2,7 @@
   Aayu Pain - Clinical & Patient Reviews Section
 {% endcomment %}
 
-<div class="aayu-reviews-section section-{{ section.id }}-padding" style="background-color: {{ section.settings.bg_color }};">
+<div id="reviews" class="aayu-reviews-section section-{{ section.id }}-padding" style="background-color: {{ section.settings.bg_color }};">
   <div class="page-width">
     <div class="aayu-reviews-header text-center">
       {% if section.settings.sub_heading != blank %}
@@ -53,6 +53,9 @@
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  .aayu-reviews-section {
+    scroll-margin-top: 80px;
   }
   .aayu-subheading {
     display: inline-block;
