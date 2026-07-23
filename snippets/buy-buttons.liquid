@@ -1,5 +1,5 @@
 {% comment %}
-  Renders product buy-buttons with Direct Checkout Prepaid CTA, Delivery Ticker, and 48+ Herbal Trust Badges.
+  Renders product buy-buttons with Direct Checkout Prepaid CTA, Jet Black COD CTA, followed by Delivery Ticker and Trust Badges below both buttons.
 {% endcomment %}
 <div {{ block.shopify_attributes }}>
   {%- if product != blank -%}
@@ -64,7 +64,7 @@
             endif
           -%}
           
-          <!-- Primary Prepaid Discount Button -> Direct Checkout (PAY ONLINE - GET INSTANT ₹100 OFF) -->
+          <!-- 1. TOP BUTTON: Primary Prepaid Discount Button -> Direct Checkout -->
           <button
             id="ProductSubmitButton-{{ section_id }}"
             type="submit"
@@ -85,40 +85,56 @@
             {%- render 'loading-spinner' -%}
           </button>
 
+          <!-- 2. SECOND BUTTON (RIGHT BELOW TOP BUTTON): Sleek Jet Black COD Button -->
+          {%- if product.selected_or_first_available_variant.available -%}
+            <button
+              type="submit"
+              name="add"
+              class="product-form__submit button button--full-width btn-black-cod"
+              onclick="document.getElementById('returnToCheckoutInput-{{ section_id }}').value='/cart'; this.form.setAttribute('data-is-cod', 'true');"
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+              <span>Order Now - Cash on Delivery</span>
+            </button>
+          {%- endif -%}
+
           {%- if show_dynamic_checkout -%}
             {{ form | payment_button }}
           {%- endif -%}
         </div>
       {%- endform -%}
 
-      <!-- High Demand & Estimated Delivery Ticker -->
-      <div class="aayu-delivery-ticker">
-        <div class="aayu-ticker-row">
-          <span class="aayu-ticker-fire">🔥</span>
-          <span class="aayu-ticker-text"><strong>High Demand:</strong> Only 14 Bottles Left in Stock! 34 People Viewing Right Now</span>
+      <!-- EXTRA ELEMENTS (LOCATED BELOW BOTH BUTTONS) -->
+      <div class="aayu-extra-elements-below-buttons" style="margin-top: 16px;">
+        <!-- High Demand & Estimated Delivery Ticker -->
+        <div class="aayu-delivery-ticker">
+          <div class="aayu-ticker-row">
+            <span class="aayu-ticker-fire">🔥</span>
+            <span class="aayu-ticker-text"><strong>High Demand:</strong> Only 14 Bottles Left in Stock! 34 People Viewing Right Now</span>
+          </div>
+          <div class="aayu-ticker-row aayu-ticker-est">
+            <span>🚚 <strong>Estimated Delivery:</strong> 3 - 5 Business Days across India | Dispatched in 24 Hours</span>
+          </div>
         </div>
-        <div class="aayu-ticker-row aayu-ticker-est">
-          <span>🚚 <strong>Estimated Delivery:</strong> 3 - 5 Business Days across India | Dispatched in 24 Hours</span>
-        </div>
-      </div>
 
-      <!-- AyuPain High-Contrast Trust Badges -->
-      <div class="aayu-trust-badges">
-        <div class="aayu-badge-item">
-          <div class="aayu-badge-icon">🌿</div>
-          <span class="aayu-badge-label">48+ Herbal Oils</span>
-        </div>
-        <div class="aayu-badge-item">
-          <div class="aayu-badge-icon">⚡</div>
-          <span class="aayu-badge-label">3-5 Mins Fast Action</span>
-        </div>
-        <div class="aayu-badge-item">
-          <div class="aayu-badge-icon">🛡️</div>
-          <span class="aayu-badge-label">100% Ayurvedic</span>
-        </div>
-        <div class="aayu-badge-item">
-          <div class="aayu-badge-icon">🚚</div>
-          <span class="aayu-badge-label">Free COD & Shipping</span>
+        <!-- AyuPain High-Contrast Trust Badges -->
+        <div class="aayu-trust-badges">
+          <div class="aayu-badge-item">
+            <div class="aayu-badge-icon">🌿</div>
+            <span class="aayu-badge-label">48+ Herbal Oils</span>
+          </div>
+          <div class="aayu-badge-item">
+            <div class="aayu-badge-icon">⚡</div>
+            <span class="aayu-badge-label">3-5 Mins Fast Action</span>
+          </div>
+          <div class="aayu-badge-item">
+            <div class="aayu-badge-icon">🛡️</div>
+            <span class="aayu-badge-label">100% Ayurvedic</span>
+          </div>
+          <div class="aayu-badge-item">
+            <div class="aayu-badge-icon">🚚</div>
+            <span class="aayu-badge-label">Free COD & Shipping</span>
+          </div>
         </div>
       </div>
     </product-form>
@@ -206,9 +222,29 @@
     font-weight: 700;
     color: #cca43b;
   }
+  /* Jet Black COD Button (Order Now - Cash on Delivery) */
+  .btn-black-cod {
+    background: #000000 !important;
+    color: #ffffff !important;
+    font-size: 1.55rem !important;
+    font-weight: 700 !important;
+    border-radius: 8px !important;
+    border: none !important;
+    padding: 1.1rem 1.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+    transition: transform 0.2s ease, background 0.2s ease !important;
+    cursor: pointer;
+  }
+  .btn-black-cod:hover {
+    transform: translateY(-2px);
+    background: #1f2937 !important;
+  }
   /* Delivery Ticker */
   .aayu-delivery-ticker {
-    margin-top: 14px;
     background: #fffbf0;
     border: 1px solid #cca43b;
     border-radius: 10px;
@@ -239,7 +275,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
-    margin-top: 1.4rem;
+    margin-top: 1rem;
     padding: 1.2rem 1rem;
     background: #faf7f2;
     border: 1.5px solid rgba(204, 164, 59, 0.35);
