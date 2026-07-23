@@ -1,14 +1,5 @@
 {% comment %}
-  Renders product buy-buttons with Prepaid Discount CTA, Pulsing COD CTA, Estimated Delivery Ticker, and 48+ Herbal Trust Badges.
-  Accepts:
-  - product: {Object} product object.
-  - block: {Object} passing the block information.
-  - product_form_id: {String} product form id.
-  - section_id: {String} id of section to which this snippet belongs.
-  - show_pickup_availability: {Boolean} for the pickup availability. If true the pickup availability is rendered, false - not rendered (optional).
-
-  Usage:
-  {% render 'buy-buttons', block: block, product: product, product_form_id: product_form_id, section_id: section.id, show_pickup_availability: true %}
+  Renders product buy-buttons with Direct Checkout Prepaid CTA, Black COD CTA, Delivery Ticker, and 48+ Herbal Trust Badges.
 {% endcomment %}
 <div {{ block.shopify_attributes }}>
   {%- if product != blank -%}
@@ -55,6 +46,8 @@
           {% endif %}
           class="product-variant-id"
         >
+        <!-- Return to checkout input for Direct Checkout -->
+        <input type="hidden" name="return_to" value="/checkout" id="returnToCheckoutInput-{{ section_id }}">
 
         {%- if gift_card_recipient_feature_active -%}
           {%- render 'gift-card-recipient-form', product: product, form: form, section: section -%}
@@ -71,12 +64,13 @@
             endif
           -%}
           
-          <!-- Primary Prepaid Discount Button (PAY ONLINE - GET INSTANT ₹100 OFF) -->
+          <!-- 1. Primary Prepaid Discount Button -> Direct Checkout (PAY ONLINE - GET INSTANT ₹100 OFF) -->
           <button
             id="ProductSubmitButton-{{ section_id }}"
             type="submit"
             name="add"
             class="product-form__submit button button--full-width btn-prepaid-highlight"
+            onclick="document.getElementById('returnToCheckoutInput-{{ section_id }}').value='/checkout';"
             {% if product.selected_or_first_available_variant.available == false
               or quantity_rule_soldout
               or product.selected_or_first_available_variant == null
@@ -91,16 +85,16 @@
             {%- render 'loading-spinner' -%}
           </button>
 
-          <!-- Cash on Delivery (COD) Order Button -->
+          <!-- 2. Sleek Jet Black COD Button (Order Now - Cash on Delivery) -->
           {%- if product.selected_or_first_available_variant.available -%}
             <button
               type="submit"
               name="add"
-              class="product-form__submit button button--full-width btn-cod-pulsing"
-              onclick="this.form.setAttribute('data-is-cod', 'true');"
+              class="product-form__submit button button--full-width btn-black-cod"
+              onclick="document.getElementById('returnToCheckoutInput-{{ section_id }}').value='/cart'; this.form.setAttribute('data-is-cod', 'true');"
             >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-              <span>ORDER CASH ON DELIVERY (कैश ऑन डिलीवरी)</span>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+              <span>Order Now - Cash on Delivery</span>
             </button>
           {%- endif -%}
 
@@ -202,6 +196,7 @@
     padding: 1rem 1.5rem !important;
     box-shadow: 0 4px 15px rgba(14, 90, 54, 0.3) !important;
     transition: transform 0.2s ease, background 0.2s ease !important;
+    cursor: pointer;
   }
   .btn-prepaid-highlight:hover {
     transform: translateY(-2px);
@@ -224,21 +219,26 @@
     font-weight: 700;
     color: #cca43b;
   }
-  /* Pulsing COD Button */
-  .btn-cod-pulsing {
-    background: linear-gradient(135deg, #cca43b 0%, #b38b2d 100%) !important;
+  /* Jet Black COD Button (Order Now - Cash on Delivery) */
+  .btn-black-cod {
+    background: #000000 !important;
     color: #ffffff !important;
-    font-size: 1.45rem !important;
-    font-weight: 800 !important;
-    border-radius: 10px !important;
+    font-size: 1.55rem !important;
+    font-weight: 700 !important;
+    border-radius: 8px !important;
     border: none !important;
     padding: 1.1rem 1.5rem !important;
-    animation: codPulse 2s infinite;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+    transition: transform 0.2s ease, background 0.2s ease !important;
+    cursor: pointer;
   }
-  @keyframes codPulse {
-    0% { box-shadow: 0 0 0 0 rgba(204, 164, 59, 0.6); }
-    70% { box-shadow: 0 0 0 12px rgba(204, 164, 59, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(204, 164, 59, 0); }
+  .btn-black-cod:hover {
+    transform: translateY(-2px);
+    background: #1f2937 !important;
   }
   /* Delivery Ticker */
   .aayu-delivery-ticker {
