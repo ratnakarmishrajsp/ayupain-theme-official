@@ -37,7 +37,7 @@
           <p class="aayu-review-comment">"{{ block.settings.comment | escape }}"</p>
 
           <div class="aayu-reviewer-info">
-            <div class="aayu-reviewer-avatar">{{ block.settings.author_name | slice: 0 }}</div>
+            <div class="aayu-reviewer-avatar">{{ block.settings.author_name | slice: 0, 1 }}</div>
             <div class="aayu-reviewer-details">
               <span class="aayu-author-name">{{ block.settings.author_name | escape }}</span>
               <span class="aayu-author-location">{{ block.settings.location | escape }}</span>
