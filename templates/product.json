@@ -1,0 +1,145 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "collapsible-row-1": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Ayurvedic Ingredients & Certification",
+            "icon": "leaf",
+            "content": "Contains pure Mahanarayan Oil, Gandhapura, Nilgiri, Kapur, and Shallaki. Ayush Certified & 100% Herbal formulation."
+          }
+        },
+        "collapsible-row-0": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Usage & Storage Instructions",
+            "icon": "bottle",
+            "content": "Apply 5-10 drops on affected joint/muscle. Massage gently for 3-5 mins twice daily. Store in a cool, dry place."
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "price",
+        "buy_buttons",
+        "description",
+        "collapsible-row-1",
+        "collapsible-row-0"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "",
+        "media_size": "large",
+        "constrain_to_viewport": false,
+        "media_fit": "cover",
+        "gallery_layout": "thumbnail_slider",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "mobile_thumbnails": "show",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "usp_grid": {
+      "type": "custom-usp-grid",
+      "settings": {
+        "sub_heading": "THE AAYU PAIN GUARANTEE",
+        "heading": "Why Thousands Trust Aayu Pain Relief Oil",
+        "bg_color": "#faf7f2"
+      }
+    },
+    "ingredients": {
+      "type": "custom-ayurvedic-ingredients",
+      "settings": {
+        "sub_heading": "100% HERBAL & AYURVEDIC FORMULA",
+        "heading": "Powerful Natural Ingredients For Fast Relief",
+        "bg_color": "#ffffff"
+      }
+    },
+    "application_guide": {
+      "type": "custom-application-guide",
+      "settings": {
+        "sub_heading": "EASY 3-STEP DAILY ROUTINE",
+        "heading": "How To Apply Aayu Pain Relief Oil",
+        "bg_color": "#faf7f2"
+      }
+    },
+    "patient_reviews": {
+      "type": "custom-patient-reviews",
+      "settings": {
+        "sub_heading": "REAL PATIENT RECOVERIES",
+        "heading": "Loved By Over 10,000+ Customers",
+        "bg_color": "#ffffff"
+      }
+    },
+    "floating_support": {
+      "type": "custom-floating-support",
+      "settings": {
+        "enable_support": true,
+        "whatsapp_number": "919876543210",
+        "phone_number": "+919876543210",
+        "enable_sticky_bar": true
+      }
+    },
+    "exit_popup": {
+      "type": "custom-exit-intent-popup",
+      "settings": {
+        "enable_popup": true,
+        "heading": "Wait! Get ₹100 OFF Today",
+        "subtitle": "Use code at checkout to claim instant ₹100 discount on your order!",
+        "coupon_code": "AAYU100",
+        "button_label": "CLAIM ₹100 DISCOUNT NOW"
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "Complete Pain Care Range",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "color_scheme": "scheme-1",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": true,
+        "columns_mobile": "2",
+        "padding_top": 36,
+        "padding_bottom": 44
+      }
+    }
+  },
+  "order": [
+    "main",
+    "usp_grid",
+    "ingredients",
+    "application_guide",
+    "patient_reviews",
+    "related-products",
+    "floating_support",
+    "exit_popup"
+  ]
+}

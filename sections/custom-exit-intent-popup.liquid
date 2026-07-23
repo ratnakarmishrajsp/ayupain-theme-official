@@ -1,0 +1,257 @@
+{% comment %}
+  Aayu Pain - Exit-Intent Popup (₹100 OFF Coupon AAYU100)
+{% endcomment %}
+
+{% if section.settings.enable_popup %}
+  <div id="AayuExitPopup" class="aayu-exit-modal-backdrop" style="display: none;">
+    <div class="aayu-exit-modal-card">
+      <button id="AayuExitCloseBtn" class="aayu-exit-close" aria-label="Close modal">&times;</button>
+      
+      <div class="aayu-exit-badge">SPECIAL DISCOVERY OFFER</div>
+      <h2 class="aayu-exit-title">{{ section.settings.heading | escape }}</h2>
+      <p class="aayu-exit-subtitle">{{ section.settings.subtitle | escape }}</p>
+
+      <div class="aayu-coupon-box">
+        <span class="aayu-coupon-label">COUPON CODE:</span>
+        <strong id="AayuCouponCode" class="aayu-coupon-code">{{ section.settings.coupon_code | escape }}</strong>
+        <button id="AayuCopyCouponBtn" class="aayu-copy-btn">COPY</button>
+      </div>
+      
+      <div id="AayuCopySuccess" class="aayu-copy-success" style="display: none;">✓ Code Copied! Discount auto-applies at checkout.</div>
+
+      <button id="AayuClaimOfferBtn" class="button button--primary btn-cod-pulsing aayu-exit-claim-btn">
+        {{ section.settings.button_label | escape }}
+      </button>
+      
+      <p class="aayu-exit-guarantee">🛡️ 100% Satisfaction Guarantee | Free Shipping & COD Available</p>
+    </div>
+  </div>
+
+  <style>
+    .aayu-exit-modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .aayu-exit-modal-card {
+      background: #ffffff;
+      border-radius: 16px;
+      max-width: 480px;
+      width: 100%;
+      padding: 2.5rem 2rem 2rem 2rem;
+      position: relative;
+      text-align: center;
+      border: 3px solid #cca43b;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      animation: popupSlideIn 0.3s ease-out;
+    }
+    @keyframes popupSlideIn {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .aayu-exit-close {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      background: transparent;
+      border: none;
+      font-size: 2.5rem;
+      color: #9ca3af;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .aayu-exit-close:hover {
+      color: #1f2937;
+    }
+    .aayu-exit-badge {
+      display: inline-block;
+      background: #e6f4ed;
+      color: #0e5a36;
+      font-size: 1.2rem;
+      font-weight: 800;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+      letter-spacing: 1px;
+    }
+    .aayu-exit-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #0e5a36;
+      margin: 0 0 0.5rem 0;
+      line-height: 1.2;
+    }
+    .aayu-exit-subtitle {
+      font-size: 1.45rem;
+      color: #4b5563;
+      margin: 0 0 1.5rem 0;
+    }
+    .aayu-coupon-box {
+      background: #faf7f2;
+      border: 2px dashed #cca43b;
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .aayu-coupon-label {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #6b7280;
+    }
+    .aayu-coupon-code {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #0e5a36;
+      letter-spacing: 2px;
+    }
+    .aayu-copy-btn {
+      background: #cca43b;
+      color: #ffffff;
+      border: none;
+      padding: 6px 14px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .aayu-copy-btn:hover {
+      background: #b38b2d;
+    }
+    .aayu-copy-success {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #0e5a36;
+      margin-bottom: 1rem;
+    }
+    .aayu-exit-claim-btn {
+      width: 100%;
+      padding: 1.2rem;
+      font-size: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    .aayu-exit-guarantee {
+      font-size: 1.2rem;
+      color: #6b7280;
+      margin: 0;
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const popup = document.getElementById('AayuExitPopup');
+      const closeBtn = document.getElementById('AayuExitCloseBtn');
+      const copyBtn = document.getElementById('AayuCopyCouponBtn');
+      const claimBtn = document.getElementById('AayuClaimOfferBtn');
+      const copySuccess = document.getElementById('AayuCopySuccess');
+      
+      let hasShown = sessionStorage.getItem('aayu_exit_shown');
+
+      function showPopup() {
+        if (!hasShown && popup) {
+          popup.style.display = 'flex';
+          sessionStorage.setItem('aayu_exit_shown', 'true');
+          hasShown = true;
+        }
+      }
+
+      // Exit mouse intent (desktop)
+      document.addEventListener('mouseleave', function(e) {
+        if (e.clientY <= 10) {
+          showPopup();
+        }
+      });
+
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+          popup.style.display = 'none';
+        });
+      }
+
+      if (popup) {
+        popup.addEventListener('click', function(e) {
+          if (e.target === popup) {
+            popup.style.display = 'none';
+          }
+        });
+      }
+
+      if (copyBtn) {
+        copyBtn.addEventListener('click', function() {
+          const code = document.getElementById('AayuCouponCode').innerText;
+          navigator.clipboard.writeText(code).then(function() {
+            if (copySuccess) copySuccess.style.display = 'block';
+          });
+        });
+      }
+
+      if (claimBtn) {
+        claimBtn.addEventListener('click', function() {
+          const code = document.getElementById('AayuCouponCode').innerText;
+          navigator.clipboard.writeText(code);
+          popup.style.display = 'none';
+          const buyBtn = document.querySelector('.product-form__submit');
+          if (buyBtn) buyBtn.scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+    });
+  </script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Exit-Intent Discount Popup",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_popup",
+      "label": "Enable Exit-Intent Discount Popup",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Popup Heading",
+      "default": "Wait! Get ₹100 OFF Today"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Popup Subtitle",
+      "default": "Use code at checkout to claim instant ₹100 discount on your order!"
+    },
+    {
+      "type": "text",
+      "id": "coupon_code",
+      "label": "Coupon Code",
+      "default": "AAYU100"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "CLAIM ₹100 DISCOUNT NOW"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Exit-Intent Discount Popup"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,193 @@
+{% comment %}
+  Renders product buy-buttons.
+  Accepts:
+  - product: {Object} product object.
+  - block: {Object} passing the block information.
+  - product_form_id: {String} product form id.
+  - section_id: {String} id of section to which this snippet belongs.
+  - show_pickup_availability: {Boolean} for the pickup availability. If true the pickup availability is rendered, false - not rendered (optional).
+
+  Usage:
+  {% render 'buy-buttons', block: block, product: product, product_form_id: product_form_id, section_id: section.id, show_pickup_availability: true %}
+{% endcomment %}
+<div {{ block.shopify_attributes }}>
+  {%- if product != blank -%}
+    {%- liquid
+      assign gift_card_recipient_feature_active = false
+      if block.settings.show_gift_card_recipient and product.gift_card?
+        assign gift_card_recipient_feature_active = true
+      endif
+
+      assign show_dynamic_checkout = false
+      if block.settings.show_dynamic_checkout and gift_card_recipient_feature_active == false
+        assign show_dynamic_checkout = true
+      endif
+    -%}
+
+    <product-form
+      class="product-form"
+      data-hide-errors="{{ gift_card_recipient_feature_active }}"
+      data-section-id="{{ section.id }}"
+    >
+      <div class="product-form__error-message-wrapper" role="alert" hidden>
+        <span class="svg-wrapper">
+          {{- 'icon-error.svg' | inline_asset_content -}}
+        </span>
+        <span class="product-form__error-message"></span>
+      </div>
+
+      {%- form 'product',
+        product,
+        id: product_form_id,
+        class: 'form',
+        novalidate: 'novalidate',
+        data-type: 'add-to-cart-form'
+      -%}
+        <input
+          type="hidden"
+          name="id"
+          value="{{ product.selected_or_first_available_variant.id }}"
+          {% if product.selected_or_first_available_variant.available == false
+            or quantity_rule_soldout
+            or product.selected_or_first_available_variant == null
+          %}
+            disabled
+          {% endif %}
+          class="product-variant-id"
+        >
+
+        {%- if gift_card_recipient_feature_active -%}
+          {%- render 'gift-card-recipient-form', product: product, form: form, section: section -%}
+        {%- endif -%}
+
+        <div class="product-form__buttons">
+          {%- liquid
+            assign check_against_inventory = true
+            if product.selected_or_first_available_variant.inventory_management != 'shopify' or product.selected_or_first_available_variant.inventory_policy == 'continue'
+              assign check_against_inventory = false
+            endif
+            if product.selected_or_first_available_variant.quantity_rule.min > product.selected_or_first_available_variant.inventory_quantity and check_against_inventory
+              assign quantity_rule_soldout = true
+            endif
+          -%}
+          <button
+            id="ProductSubmitButton-{{ section_id }}"
+            type="submit"
+            name="add"
+            class="product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
+            {% if product.selected_or_first_available_variant.available == false
+              or quantity_rule_soldout
+              or product.selected_or_first_available_variant == null
+            %}
+              disabled
+            {% endif %}
+          >
+            <span>
+              {%- if product.selected_or_first_available_variant == null -%}
+                {{ 'products.product.unavailable' | t }}
+              {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
+                {{ 'products.product.sold_out' | t }}
+              {%- else -%}
+                {{ 'products.product.add_to_cart' | t }}
+              {%- endif -%}
+            </span>
+            {%- render 'loading-spinner' -%}
+          </button>
+
+          {%- if product.selected_or_first_available_variant.available -%}
+            <button
+              type="submit"
+              name="add"
+              class="product-form__submit button button--full-width btn-cod-pulsing"
+              style="margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;"
+              onclick="this.form.setAttribute('data-is-cod', 'true');"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              <span>ORDER CASH ON DELIVERY (कैश ऑन डिलीवरी)</span>
+            </button>
+          {%- endif -%}
+
+          {%- if show_dynamic_checkout -%}
+            {{ form | payment_button }}
+          {%- endif -%}
+        </div>
+      {%- endform -%}
+
+      <!-- Aayu Pain Ayurvedic Trust Badges -->
+      <div class="aayu-trust-badges">
+        <div class="aayu-badge-item">
+          <div class="aayu-badge-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <span class="aayu-badge-label">Ayush Certified</span>
+        </div>
+        <div class="aayu-badge-item">
+          <div class="aayu-badge-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <span class="aayu-badge-label">Fast Pain Relief</span>
+        </div>
+        <div class="aayu-badge-item">
+          <div class="aayu-badge-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.5 10-10 10z"/></svg>
+          </div>
+          <span class="aayu-badge-label">100% Herbal</span>
+        </div>
+        <div class="aayu-badge-item">
+          <div class="aayu-badge-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <span class="aayu-badge-label">Free Shipping</span>
+        </div>
+      </div>
+    </product-form>
+  {%- else -%}
+    <div class="product-form">
+      <div class="product-form__buttons form">
+        <button
+          type="submit"
+          name="add"
+          class="product-form__submit button button--full-width button--primary"
+          disabled
+        >
+          {{ 'products.product.sold_out' | t }}
+        </button>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if show_pickup_availability -%}
+    {{ 'component-pickup-availability.css' | asset_url | stylesheet_tag }}
+
+    {%- assign pick_up_availabilities = product.selected_or_first_available_variant.store_availabilities
+      | where: 'pick_up_enabled', true
+    -%}
+
+    <pickup-availability
+      class="product__pickup-availabilities quick-add-hidden"
+      {% if product.selected_or_first_available_variant.available and pick_up_availabilities.size > 0 %}
+        available
+      {% endif %}
+      data-root-url="{{ routes.root_url }}"
+      data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+      data-has-only-default-variant="{{ product.has_only_default_variant }}"
+      data-product-page-color-scheme="gradient color-{{ section.settings.color_scheme }}"
+    >
+      <template>
+        <pickup-availability-preview class="pickup-availability-preview">
+          <span class="svg-wrapper">
+            {{- 'icon-unavailable.svg' | inline_asset_content -}}
+          </span>
+          <div class="pickup-availability-info">
+            <p class="caption-large">{{ 'products.product.pickup_availability.unavailable' | t }}</p>
+            <button class="pickup-availability-button link link--text underlined-link">
+              {{ 'products.product.pickup_availability.refresh' | t }}
+            </button>
+          </div>
+        </pickup-availability-preview>
+      </template>
+    </pickup-availability>
+
+    <script src="{{ 'pickup-availability.js' | asset_url }}" defer="defer"></script>
+  {%- endif -%}
+</div>

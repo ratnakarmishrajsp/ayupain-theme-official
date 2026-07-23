@@ -1,0 +1,140 @@
+{
+  "sections": {
+    "image_banner": {
+      "type": "image-banner",
+      "blocks": {
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "100% PURE AYURVEDIC PAIN RELIEF",
+            "text_style": "caption-with-letter-spacing"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Fast & Deep Joint, Muscle & Back Pain Relief",
+            "heading_size": "h1"
+          }
+        },
+        "button": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "ORDER CASH ON DELIVERY (COD)",
+            "button_link_1": "shopify://collections/all",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "text",
+        "heading",
+        "button"
+      ],
+      "settings": {
+        "image_overlay_opacity": 40,
+        "image_height": "small",
+        "desktop_content_position": "middle-left",
+        "show_text_box": false,
+        "desktop_content_alignment": "left",
+        "color_scheme": "scheme-5",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": false
+      }
+    },
+    "usp_grid": {
+      "type": "custom-usp-grid",
+      "settings": {
+        "sub_heading": "THE AAYU PAIN GUARANTEE",
+        "heading": "Why Thousands Trust Aayu Pain Relief Oil",
+        "bg_color": "#faf7f2"
+      }
+    },
+    "ingredients": {
+      "type": "custom-ayurvedic-ingredients",
+      "settings": {
+        "sub_heading": "100% HERBAL & AYURVEDIC FORMULA",
+        "heading": "Powerful Natural Ingredients For Fast Relief",
+        "bg_color": "#ffffff"
+      }
+    },
+    "featured_collection1": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Aayu Pain Relief Products",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "collection": "",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "enable_desktop_slider": false,
+        "color_scheme": "",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": true,
+        "quick_add": "bulk",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 52
+      }
+    },
+    "application_guide": {
+      "type": "custom-application-guide",
+      "settings": {
+        "sub_heading": "EASY 3-STEP DAILY ROUTINE",
+        "heading": "How To Apply Aayu Pain Relief Oil",
+        "bg_color": "#faf7f2"
+      }
+    },
+    "patient_reviews": {
+      "type": "custom-patient-reviews",
+      "settings": {
+        "sub_heading": "REAL PATIENT RECOVERIES",
+        "heading": "Loved By Over 10,000+ Customers",
+        "bg_color": "#ffffff"
+      }
+    },
+    "floating_support": {
+      "type": "custom-floating-support",
+      "settings": {
+        "enable_support": true,
+        "whatsapp_number": "919876543210",
+        "phone_number": "+919876543210",
+        "enable_sticky_bar": false
+      }
+    },
+    "exit_popup": {
+      "type": "custom-exit-intent-popup",
+      "settings": {
+        "enable_popup": true,
+        "heading": "Wait! Get ₹100 OFF Today",
+        "subtitle": "Use code at checkout to claim instant ₹100 discount on your order!",
+        "coupon_code": "AAYU100",
+        "button_label": "CLAIM ₹100 DISCOUNT NOW"
+      }
+    }
+  },
+  "order": [
+    "image_banner",
+    "usp_grid",
+    "ingredients",
+    "featured_collection1",
+    "application_guide",
+    "patient_reviews",
+    "floating_support",
+    "exit_popup"
+  ]
+}
