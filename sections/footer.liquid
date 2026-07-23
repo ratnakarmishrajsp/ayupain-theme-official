@@ -1,545 +1,302 @@
-{% comment %}theme-check-disable UndefinedObject{% endcomment %}
-{{ 'section-footer.css' | asset_url | stylesheet_tag }}
-{{ 'component-newsletter.css' | asset_url | stylesheet_tag }}
-{{ 'component-list-menu.css' | asset_url | stylesheet_tag }}
-{{ 'component-list-payment.css' | asset_url | stylesheet_tag }}
-{{ 'component-list-social.css' | asset_url | stylesheet_tag }}
+{% comment %}
+  Aayu Pain - Premium Branded Ayurvedic Footer Section
+{% endcomment %}
 
-{%- style -%}
-  .footer {
-    margin-top: {{ section.settings.margin_top | times: 0.75 | round: 0 }}px;
-  }
-
-  .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
-  }
-
-  @media screen and (min-width: 750px) {
-    .footer {
-      margin-top: {{ section.settings.margin_top }}px;
-    }
-
-    .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
-  }
-{%- endstyle -%}
-
-<footer class="footer color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
-  {%- liquid
-    assign has_social_icons = true
-    if settings.social_facebook_link == blank and settings.social_instagram_link == blank and settings.social_youtube_link == blank and settings.social_tiktok_link == blank and settings.social_twitter_link == blank and settings.social_pinterest_link == blank and settings.social_snapchat_link == blank and settings.social_tumblr_link == blank and settings.social_vimeo_link == blank
-      assign has_social_icons = false
-    endif
-
-    if settings.brand_image == blank and settings.brand_headline == blank and settings.brand_description == blank
-      assign brand_empty = true
-    endif
-
-    if section.blocks.size == 1 and section.blocks[0].type == 'brand_information' and brand_empty and has_social_icons == false and section.settings.newsletter_enable == false and section.settings.enable_follow_on_shop == false
-      assign only_empty_brand = true
-    endif
-  -%}
-  {%- if section.blocks.size > 0
-    or section.settings.newsletter_enable
-    or section.settings.show_social
-    and has_social_icons == true
-    or section.settings.enable_follow_on_shop
-  -%}
-    {%- unless only_empty_brand -%}
-      <div class="footer__content-top page-width">
-        {%- if section.blocks.size > 0 -%}
-          {%- liquid
-            if section.blocks.size == 9
-              assign footer_grid_class = 'grid--3-col-tablet'
-            elsif section.blocks.size > 6
-              assign footer_grid_class = 'grid--4-col-desktop'
-            elsif section.blocks.size > 4
-              assign footer_grid_class = 'grid--3-col-tablet'
-            endif
-          -%}
-          <div
-            class="footer__blocks-wrapper grid grid--1-col grid--2-col grid--4-col-tablet {{ footer_grid_class }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-            {% if settings.animations_reveal_on_scroll %}
-              data-cascade
-            {% endif %}
-          >
-            {%- for block in section.blocks -%}
-              <div
-                class="footer-block grid__item{% if block.type == 'link_list' %} footer-block--menu{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-                {{ block.shopify_attributes }}
-                {% if settings.animations_reveal_on_scroll %}
-                  data-cascade
-                  style="--animation-order: {{ forloop.index }};"
-                {% endif %}
-              >
-                {%- if block.settings.heading != blank -%}
-                  <h2 class="footer-block__heading inline-richtext">{{- block.settings.heading -}}</h2>
-                {%- endif -%}
-
-                {%- case block.type -%}
-                  {%- when '@app' -%}
-                    {% render block %}
-                  {%- when 'text' -%}
-                    <div class="footer-block__details-content rte">
-                      {{ block.settings.subtext }}
-                    </div>
-                  {%- when 'link_list' -%}
-                    {%- if block.settings.menu != blank -%}
-                      <ul class="footer-block__details-content list-unstyled">
-                        {%- for link in block.settings.menu.links -%}
-                          <li>
-                            <a
-                              href="{{ link.url }}"
-                              class="link link--text list-menu__item list-menu__item--link{% if link.active %} list-menu__item--active{% endif %}"
-                            >
-                              {{ link.title | escape }}
-                            </a>
-                          </li>
-                        {%- endfor -%}
-                      </ul>
-                    {%- endif -%}
-                  {%- when 'brand_information' -%}
-                    <div class="footer-block__brand-info">
-                      {%- if settings.brand_image != blank -%}
-                        {%- assign brand_image_height = settings.brand_image_width
-                          | divided_by: settings.brand_image.aspect_ratio
-                        -%}
-                        <div
-                          class="footer-block__image-wrapper"
-                          style="max-width: min(100%, {{ settings.brand_image_width }}px);"
-                        >
-                          {{
-                            settings.brand_image
-                            | image_url: width: 1100
-                            | image_tag:
-                              loading: 'lazy',
-                              widths: '50, 100, 150, 200, 300, 400, 550, 800, 1100',
-                              height: brand_image_height,
-                              width: settings.brand_image_width
-                          }}
-                        </div>
-                      {%- endif -%}
-                      {%- if settings.brand_headline != blank -%}
-                        <h2 class="footer-block__heading rte">{{ settings.brand_headline }}</h2>
-                      {%- endif -%}
-                      {%- if settings.brand_description != blank -%}
-                        <div class="rte">{{ settings.brand_description }}</div>
-                      {%- endif -%}
-                      {%- if block.settings.show_social and has_social_icons -%}
-                        {%- render 'social-icons', class: 'footer__list-social' -%}
-                      {%- endif -%}
-                    </div>
-                  {%- when 'image' -%}
-                    <div class="footer-block__details-content footer-block-image {{ block.settings.alignment }}">
-                      {%- if block.settings.image != blank -%}
-                        {%- assign image_size_2x = block.settings.image_width | times: 2 | at_most: 5760 -%}
-                        <div
-                          class="footer-block__image-wrapper"
-                          style="max-width: min(100%, {{ block.settings.image_width }}px);"
-                        >
-                          <img
-                            srcset="{{ block.settings.image | image_url: width: block.settings.image_width }}, {{ block.settings.image | image_url: width: image_size_2x }} 2x"
-                            src="{{ block.settings.image | image_url: width: 760 }}"
-                            alt="{{ block.settings.image.alt | escape }}"
-                            loading="lazy"
-                            width="{{ block.settings.image.width }}"
-                            height="{{ block.settings.image.height }}"
-                          >
-                        </div>
-                      {%- else -%}
-                        {{ 'image' | placeholder_svg_tag: 'placeholder-svg placeholder' }}
-                      {%- endif -%}
-                    </div>
-                {%- endcase -%}
-              </div>
-            {%- endfor -%}
+<footer class="aayu-footer-section">
+  <!-- Top Trust Strip -->
+  <div class="aayu-footer-trust-strip">
+    <div class="page-width">
+      <div class="aayu-footer-trust-grid">
+        <div class="aayu-footer-trust-item">
+          <div class="aayu-footer-trust-icon">🌿</div>
+          <div class="aayu-footer-trust-text">
+            <strong>100% Ayurvedic</strong>
+            <span>48+ Certified Pure Herbs</span>
           </div>
-        {%- endif -%}
-
-        <div
-          class="footer-block--newsletter{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-          {% if settings.animations_reveal_on_scroll %}
-            data-cascade
-          {% endif %}
-        >
-          {%- if section.settings.newsletter_enable -%}
-            <div class="footer-block__newsletter">
-              {%- if section.settings.newsletter_heading != blank -%}
-                <h2 class="footer-block__heading inline-richtext">{{ section.settings.newsletter_heading }}</h2>
-              {%- endif -%}
-              {%- form 'customer', id: 'ContactFooter', class: 'footer__newsletter newsletter-form' -%}
-                <input type="hidden" name="contact[tags]" value="newsletter">
-                <div class="newsletter-form__field-wrapper">
-                  <div class="field">
-                    <input
-                      id="NewsletterForm--{{ section.id }}"
-                      type="email"
-                      name="contact[email]"
-                      class="field__input"
-                      value="{{ form.email }}"
-                      aria-required="true"
-                      autocorrect="off"
-                      autocapitalize="off"
-                      autocomplete="email"
-                      {% if form.errors %}
-                        autofocus
-                        aria-invalid="true"
-                        aria-describedby="ContactFooter-error"
-                      {% elsif form.posted_successfully? %}
-                        aria-describedby="ContactFooter-success"
-                      {% endif %}
-                      placeholder="{{ 'newsletter.label' | t }}"
-                      required
-                    >
-                    <label class="field__label" for="NewsletterForm--{{ section.id }}">
-                      {{ 'newsletter.label' | t }}
-                    </label>
-                    <button
-                      type="submit"
-                      class="newsletter-form__button field__button"
-                      name="commit"
-                      id="Subscribe"
-                      aria-label="{{ 'newsletter.button_label' | t }}"
-                    >
-                      <span class="svg-wrapper">
-                        {{- 'icon-arrow.svg' | inline_asset_content -}}
-                      </span>
-                    </button>
-                  </div>
-                  {%- if form.errors -%}
-                    <small class="newsletter-form__message form__message" id="ContactFooter-error">
-                      <span class="svg-wrapper">
-                        {{- 'icon-error.svg' | inline_asset_content -}}
-                      </span>
-                      {{- form.errors.translated_fields.email | capitalize }}
-                      {{ form.errors.messages.email -}}
-                    </small>
-                  {%- endif -%}
-                </div>
-                {%- if form.posted_successfully? -%}
-                  <h3
-                    class="newsletter-form__message newsletter-form__message--success form__message"
-                    id="ContactFooter-success"
-                    tabindex="-1"
-                    autofocus
-                  >
-                    <span class="svg-wrapper">
-                      {{- 'icon-success.svg' | inline_asset_content -}}
-                    </span>
-                    {{- 'newsletter.success' | t }}
-                  </h3>
-                {%- endif -%}
-              {%- endform -%}
-            </div>
-          {%- endif -%}
-
-          {%- if shop.features.follow_on_shop? and section.settings.enable_follow_on_shop -%}
-            <div class="footer__follow-on-shop">
-              {{ shop | login_button: action: 'follow' }}
-            </div>
-          {%- endif -%}
-
-          {%- if section.settings.show_social and has_social_icons -%}
-            {%- render 'social-icons', class: 'footer__list-social' -%}
-          {%- endif -%}
+        </div>
+        <div class="aayu-footer-trust-item">
+          <div class="aayu-footer-trust-icon">🛡️</div>
+          <div class="aayu-footer-trust-text">
+            <strong>Ayush Certified</strong>
+            <span>Tested & Safe Formula</span>
+          </div>
+        </div>
+        <div class="aayu-footer-trust-item">
+          <div class="aayu-footer-trust-icon">🚚</div>
+          <div class="aayu-footer-trust-text">
+            <strong>100% COD Available</strong>
+            <span>Free Shipping Across India</span>
+          </div>
+        </div>
+        <div class="aayu-footer-trust-item">
+          <div class="aayu-footer-trust-icon">📞</div>
+          <div class="aayu-footer-trust-text">
+            <strong>WhatsApp Support</strong>
+            <span>1-Tap Order Assistance</span>
+          </div>
         </div>
       </div>
-    {%- endunless -%}
-  {%- endif -%}
+    </div>
+  </div>
 
-  <div
-    class="footer__content-bottom{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-    {% if settings.animations_reveal_on_scroll %}
-      data-cascade
-    {% endif %}
-  >
-    <div class="footer__content-bottom-wrapper page-width">
-      <div class="footer__column footer__localization isolate">
-        {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
-          <localization-form>
-            {%- form 'localization', id: 'FooterCountryForm', class: 'localization-form' -%}
-              <div>
-                <h2 class="caption-large text-body" id="FooterCountryLabel">{{ 'localization.country_label' | t }}</h2>
-                {%- render 'country-localization', localPosition: 'FooterCountry' -%}
-              </div>
-            {%- endform -%}
-          </localization-form>
-        {%- endif -%}
-
-        {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
-          <localization-form>
-            {%- form 'localization', id: 'FooterLanguageForm', class: 'localization-form' -%}
-              <div>
-                <h2 class="caption-large text-body" id="FooterLanguageLabel">
-                  {{ 'localization.language_label' | t }}
-                </h2>
-                {%- render 'language-localization', localPosition: 'FooterLanguage' -%}
-              </div>
-            {%- endform -%}
-          </localization-form>
-        {%- endif -%}
-      </div>
-      <div class="footer__column footer__column--info">
-        {%- if section.settings.payment_enable -%}
-          <div class="footer__payment">
-            <span class="visually-hidden">{{ 'sections.footer.payment' | t }}</span>
-            <ul class="list list-payment" role="list">
-              {%- for type in shop.enabled_payment_types -%}
-                <li class="list-payment__item">
-                  {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
-                </li>
-              {%- endfor -%}
-            </ul>
+  <!-- Main Footer Content -->
+  <div class="aayu-footer-main">
+    <div class="page-width">
+      <div class="aayu-footer-grid">
+        <!-- Col 1: Brand Info -->
+        <div class="aayu-footer-col">
+          <h2 class="aayu-footer-logo">AyuPain™</h2>
+          <p class="aayu-footer-hindi">आयुर्वेदिक दर्द राहत तेल</p>
+          <p class="aayu-footer-about">AyuPain™ is a 100% pure Ayurvedic joint, knee, back, shoulder & muscle pain relief oil formulated with 48+ Ayush-certified herbs & botanical oils.</p>
+          <div class="aayu-footer-badges">
+            <span class="aayu-footer-badge">✓ Ayush Certified</span>
+            <span class="aayu-footer-badge">✓ 0% Mineral Oil</span>
           </div>
-        {%- endif -%}
+        </div>
+
+        <!-- Col 2: Quick Links -->
+        <div class="aayu-footer-col">
+          <h3 class="aayu-footer-title">Quick Links</h3>
+          <ul class="aayu-footer-menu">
+            <li><a href="/">Home</a></li>
+            <li><a href="/collections/all">Shop Pain Relief Oils</a></li>
+            <li><a href="/#ingredients">48+ Ayurvedic Herbs</a></li>
+            <li><a href="/#application">3-Step Relief Guide</a></li>
+            <li><a href="/#reviews">Patient Recoveries</a></li>
+            <li><a href="/#faq">Frequently Asked Questions</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Customer Care & COD -->
+        <div class="aayu-footer-col">
+          <h3 class="aayu-footer-title">Order Support & Help</h3>
+          <p class="aayu-footer-contact-item">
+            <strong>📞 Helpline:</strong> <a href="tel:+919876543210">+91 9876543210</a>
+          </p>
+          <p class="aayu-footer-contact-item">
+            <strong>💬 WhatsApp:</strong> <a href="https://wa.me/919876543210" target="_blank" rel="noopener">+91 9876543210</a>
+          </p>
+          <p class="aayu-footer-contact-item">
+            <strong>✉️ Email:</strong> <a href="mailto:support@ayupain.com">support@ayupain.com</a>
+          </p>
+          <p class="aayu-footer-contact-item">
+            <strong>📍 Care Address:</strong> Ayush Certified Lab, India
+          </p>
+        </div>
+
+        <!-- Col 4: Trust Guarantee -->
+        <div class="aayu-footer-col">
+          <h3 class="aayu-footer-title">Ayurvedic Guarantee</h3>
+          <p class="aayu-footer-guarantee-text">Free Shipping & 100% Cash on Delivery available on all orders across India. Safe, tamper-evident packaging.</p>
+          <div class="aayu-footer-payment-tags">
+            <span class="aayu-payment-tag">💵 CASH ON DELIVERY</span>
+            <span class="aayu-payment-tag">📲 UPI / PhonePe / Paytm</span>
+            <span class="aayu-payment-tag">💳 VISA / Mastercard</span>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="footer__content-bottom-wrapper page-width{% if section.settings.enable_country_selector == false and section.settings.enable_language_selector == false %} footer__content-bottom-wrapper--center{% endif %}">
-      <div class="footer__copyright caption">
-        <small class="copyright__content"
-          >&copy; {{ 'now' | date: '%Y' }}, {{ shop.name | link_to: routes.root_url -}}
-        </small>
-        <small class="copyright__content">{{ powered_by_link }}</small>
-        {%- if section.settings.show_policy -%}
-          <ul class="policies list-unstyled">
-            {%- for policy in shop.policies -%}
-              {%- if policy != blank -%}
-                <li>
-                  <small class="copyright__content"
-                    ><a href="{{ policy.url }}">{{ policy.title | escape }}</a></small
-                  >
-                </li>
-              {%- endif -%}
-            {%- endfor -%}
-          </ul>
-        {%- endif -%}
+  </div>
+
+  <!-- Bottom Copyright Bar -->
+  <div class="aayu-footer-bottom">
+    <div class="page-width">
+      <div class="aayu-footer-bottom-flex">
+        <p class="aayu-copyright">© {{ 'now' | date: '%Y' }} AyuPain™ Official Store (आयु पेन). All Rights Reserved.</p>
+        <p class="aayu-disclaimer">Disclaimer: 100% Herbal formulation for external application. Results may vary based on usage.</p>
       </div>
     </div>
   </div>
 </footer>
 
+<style>
+  .aayu-footer-section {
+    background: #093f25;
+    color: #ffffff;
+    border-top: 3px solid #cca43b;
+    font-family: inherit;
+  }
+  .aayu-footer-trust-strip {
+    background: #062b19;
+    border-bottom: 1px solid rgba(204, 164, 59, 0.3);
+    padding: 1.8rem 0;
+  }
+  .aayu-footer-trust-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+  @media screen and (max-width: 850px) {
+    .aayu-footer-trust-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media screen and (max-width: 500px) {
+    .aayu-footer-trust-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .aayu-footer-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .aayu-footer-trust-icon {
+    font-size: 2.2rem;
+  }
+  .aayu-footer-trust-text {
+    display: flex;
+    flex-direction: column;
+  }
+  .aayu-footer-trust-text strong {
+    font-size: 1.35rem;
+    color: #cca43b;
+  }
+  .aayu-footer-trust-text span {
+    font-size: 1.15rem;
+    color: #d1d5db;
+  }
+  .aayu-footer-main {
+    padding: 4.5rem 0 3.5rem 0;
+  }
+  .aayu-footer-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1.2fr 1.2fr;
+    gap: 3rem;
+  }
+  @media screen and (max-width: 989px) {
+    .aayu-footer-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+  }
+  @media screen and (max-width: 550px) {
+    .aayu-footer-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .aayu-footer-logo {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0 0 0.2rem 0;
+  }
+  .aayu-footer-hindi {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #cca43b;
+    margin: 0 0 1.2rem 0;
+  }
+  .aayu-footer-about {
+    font-size: 1.35rem;
+    color: #9ca3af;
+    line-height: 1.6;
+    margin: 0 0 1.5rem 0;
+  }
+  .aayu-footer-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .aayu-footer-badge {
+    background: rgba(204, 164, 59, 0.2);
+    border: 1px solid #cca43b;
+    color: #cca43b;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 12px;
+  }
+  .aayu-footer-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #cca43b;
+    margin: 0 0 1.5rem 0;
+    position: relative;
+  }
+  .aayu-footer-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .aayu-footer-menu a {
+    color: #d1d5db;
+    text-decoration: none;
+    font-size: 1.35rem;
+    transition: color 0.2s ease;
+  }
+  .aayu-footer-menu a:hover {
+    color: #cca43b;
+  }
+  .aayu-footer-contact-item {
+    font-size: 1.35rem;
+    color: #d1d5db;
+    margin: 0 0 1rem 0;
+    line-height: 1.5;
+  }
+  .aayu-footer-contact-item a {
+    color: #cca43b;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .aayu-footer-guarantee-text {
+    font-size: 1.35rem;
+    color: #9ca3af;
+    line-height: 1.6;
+    margin: 0 0 1.5rem 0;
+  }
+  .aayu-footer-payment-tags {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .aayu-payment-tag {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(204, 164, 59, 0.3);
+    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 6px;
+    display: inline-block;
+  }
+  .aayu-footer-bottom {
+    background: #041f12;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.8rem 0;
+  }
+  .aayu-footer-bottom-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .aayu-copyright {
+    font-size: 1.25rem;
+    color: #9ca3af;
+    margin: 0;
+  }
+  .aayu-disclaimer {
+    font-size: 1.15rem;
+    color: #6b7280;
+    margin: 0;
+  }
+</style>
+
 {% schema %}
 {
-  "name": "t:sections.footer.name",
-  "blocks": [
+  "name": "Aayu Pain Footer",
+  "tag": "section",
+  "class": "section-footer",
+  "settings": [],
+  "presets": [
     {
-      "type": "@app"
-    },
-    {
-      "type": "link_list",
-      "name": "t:sections.footer.blocks.link_list.name",
-      "settings": [
-        {
-          "type": "inline_richtext",
-          "id": "heading",
-          "default": "t:sections.footer.blocks.link_list.settings.heading.default",
-          "label": "t:sections.footer.blocks.link_list.settings.heading.label"
-        },
-        {
-          "type": "link_list",
-          "id": "menu",
-          "default": "footer",
-          "label": "t:sections.footer.blocks.link_list.settings.menu.label"
-        }
-      ]
-    },
-    {
-      "type": "brand_information",
-      "name": "t:sections.footer.blocks.brand_information.name",
-      "settings": [
-        {
-          "type": "paragraph",
-          "content": "t:sections.footer.blocks.brand_information.settings.paragraph.content"
-        },
-        {
-          "type": "checkbox",
-          "id": "show_social",
-          "default": true,
-          "label": "t:sections.footer.blocks.brand_information.settings.show_social.label",
-          "info": "t:sections.footer.blocks.brand_information.settings.show_social.info"
-        }
-      ]
-    },
-    {
-      "type": "text",
-      "name": "t:sections.footer.blocks.text.name",
-      "settings": [
-        {
-          "type": "inline_richtext",
-          "id": "heading",
-          "default": "t:sections.footer.blocks.text.settings.heading.default",
-          "label": "t:sections.footer.blocks.text.settings.heading.label"
-        },
-        {
-          "type": "richtext",
-          "id": "subtext",
-          "default": "t:sections.footer.blocks.text.settings.subtext.default",
-          "label": "t:sections.footer.blocks.text.settings.subtext.label"
-        }
-      ]
-    },
-    {
-      "type": "image",
-      "name": "Image",
-      "settings": [
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Image"
-        },
-        {
-          "type": "range",
-          "id": "image_width",
-          "min": 50,
-          "max": 550,
-          "step": 5,
-          "unit": "px",
-          "label": "Width",
-          "default": 100
-        },
-        {
-          "type": "select",
-          "id": "alignment",
-          "label": "Alignment",
-          "options": [
-            {
-              "value": "",
-              "label": "Left"
-            },
-            {
-              "value": "center",
-              "label": "Center"
-            },
-            {
-              "value": "right",
-              "label": "Right"
-            }
-          ],
-          "default": "center"
-        }
-      ]
+      "name": "Aayu Pain Footer"
     }
-  ],
-  "settings": [
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:sections.all.colors.label",
-      "default": "scheme-1"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.footer.settings.header__1.content",
-      "info": "t:sections.footer.settings.header__1.info"
-    },
-    {
-      "type": "checkbox",
-      "id": "newsletter_enable",
-      "default": true,
-      "label": "t:sections.footer.settings.newsletter_enable.label"
-    },
-    {
-      "type": "inline_richtext",
-      "id": "newsletter_heading",
-      "default": "t:sections.footer.settings.newsletter_heading.default",
-      "label": "t:sections.footer.settings.newsletter_heading.label"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.footer.settings.header__9.content"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_follow_on_shop",
-      "default": true,
-      "label": "t:sections.footer.settings.enable_follow_on_shop.label",
-      "info": "t:sections.footer.settings.enable_follow_on_shop.info"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_social",
-      "default": true,
-      "label": "t:sections.footer.settings.show_social.label",
-      "info": "t:sections.footer.settings.show_social.info"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_country_selector",
-      "default": true,
-      "label": "t:sections.footer.settings.enable_country_selector.label",
-      "info": "t:sections.footer.settings.enable_country_selector.info"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_language_selector",
-      "default": true,
-      "label": "t:sections.footer.settings.enable_language_selector.label",
-      "info": "t:sections.footer.settings.enable_language_selector.info"
-    },
-    {
-      "type": "checkbox",
-      "id": "payment_enable",
-      "default": true,
-      "label": "t:sections.footer.settings.payment_enable.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_policy",
-      "default": true,
-      "label": "t:sections.footer.settings.show_policy.label",
-      "info": "t:sections.footer.settings.show_policy.info"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.all.spacing"
-    },
-    {
-      "type": "range",
-      "id": "margin_top",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.footer.settings.margin_top.label",
-      "default": 0
-    },
-    {
-      "type": "header",
-      "content": "t:sections.all.padding.section_padding_heading"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.all.padding.padding_top",
-      "default": 36
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.all.padding.padding_bottom",
-      "default": 36
-    }
-  ],
-  "default": {
-    "blocks": [
-      {
-        "type": "link_list"
-      },
-      {
-        "type": "text"
-      }
-    ]
-  }
+  ]
 }
 {% endschema %}
