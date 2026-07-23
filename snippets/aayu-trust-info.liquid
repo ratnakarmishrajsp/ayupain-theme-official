@@ -1,0 +1,107 @@
+{% comment %}
+  Aayu Pain - High Demand Ticker, Delivery Ticker & Trust Badges Grid Snippet
+{% endcomment %}
+
+<div class="aayu-trust-info-wrapper" style="margin-top: 14px; margin-bottom: 14px;">
+  <!-- High Demand & Estimated Delivery Ticker -->
+  <div class="aayu-delivery-ticker">
+    <div class="aayu-ticker-row">
+      <span class="aayu-ticker-fire">🔥</span>
+      <span class="aayu-ticker-text"><strong>High Demand:</strong> Only 14 Bottles Left in Stock! 34 People Viewing Right Now</span>
+    </div>
+    <div class="aayu-ticker-row aayu-ticker-est">
+      <span>🚚 <strong>Estimated Delivery:</strong> 3 - 5 Business Days across India | Dispatched in 24 Hours</span>
+    </div>
+  </div>
+
+  <!-- AyuPain High-Contrast Trust Badges -->
+  <div class="aayu-trust-badges">
+    <div class="aayu-badge-item">
+      <div class="aayu-badge-icon">🌿</div>
+      <span class="aayu-badge-label">48+ Herbal Oils</span>
+    </div>
+    <div class="aayu-badge-item">
+      <div class="aayu-badge-icon">⚡</div>
+      <span class="aayu-badge-label">3-5 Mins Fast Action</span>
+    </div>
+    <div class="aayu-badge-item">
+      <div class="aayu-badge-icon">🛡️</div>
+      <span class="aayu-badge-label">100% Ayurvedic</span>
+    </div>
+    <div class="aayu-badge-item">
+      <div class="aayu-badge-icon">🚚</div>
+      <span class="aayu-badge-label">Free COD & Shipping</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Delivery Ticker */
+  .aayu-delivery-ticker {
+    background: #fffbf0;
+    border: 1px solid #cca43b;
+    border-radius: 10px;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .aayu-ticker-row {
+    font-size: 1.3rem;
+    color: #b38b2d;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .aayu-ticker-est {
+    font-size: 1.2rem;
+    color: #374151;
+    border-top: 1px dashed rgba(204, 164, 59, 0.4);
+    padding-top: 6px;
+  }
+  .aayu-ticker-fire {
+    animation: pulse 1.5s infinite;
+    color: #dc2626;
+  }
+  /* High-Contrast Trust Badges Grid */
+  .aayu-trust-badges {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 1rem;
+    padding: 1.2rem 1rem;
+    background: #faf7f2;
+    border: 1.5px solid rgba(204, 164, 59, 0.35);
+    border-radius: 12px;
+    text-align: center;
+  }
+  @media screen and (max-width: 640px) {
+    .aayu-trust-badges {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  .aayu-badge-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .aayu-badge-icon {
+    font-size: 2rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid rgba(204, 164, 59, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  }
+  .aayu-badge-label {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0e5a36;
+    line-height: 1.2;
+  }
+</style>

@@ -31,6 +31,12 @@
         "app": {
           "type": "@app"
         },
+        "trust_info": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'aayu-trust-info' %}"
+          }
+        },
         "description": {
           "type": "description",
           "settings": {}
@@ -59,6 +65,7 @@
         "quantity_selector",
         "buy_buttons",
         "app",
+        "trust_info",
         "description",
         "collapsible-row-1",
         "collapsible-row-0"
