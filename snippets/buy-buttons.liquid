@@ -273,22 +273,22 @@
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   }
 
-  /* Ultra-Premium Color Grading for Relish / Releasit COD App Buttons */
-  div[class*="releasit"] button,
-  div[id*="releasit"] button,
-  div[class*="relish"] button,
-  div[id*="relish"] button,
+  /* Ultra-Premium Color Grading for Relish / Releasit COD App Buttons (EXCLUDING close buttons) */
+  div[class*="releasit"] button:not([class*="close"]):not([id*="close"]):not([aria-label*="close"]):not(.close),
+  div[id*="releasit"] button:not([class*="close"]):not([id*="close"]):not([aria-label*="close"]):not(.close),
+  div[class*="relish"] button:not([class*="close"]):not([id*="close"]):not([aria-label*="close"]):not(.close),
+  div[id*="relish"] button:not([class*="close"]):not([id*="close"]):not([aria-label*="close"]):not(.close),
   .releasit-button,
   .releasit-cod-button,
   .relish-button,
   .relish-cod-button,
   [data-releasit-button],
   [data-relish-button],
-  div[class*="cod-"] button,
-  button[class*="cod-"],
-  .shopify-app-block button,
-  .product-form__buttons + div button,
-  div.product-form__buttons ~ div button {
+  div[class*="cod-"] button:not([class*="close"]),
+  button[class*="cod-"]:not([class*="close"]),
+  .shopify-app-block button:not([class*="close"]),
+  .product-form__buttons + div button:not([class*="close"]),
+  div.product-form__buttons ~ div button:not([class*="close"]) {
     background: linear-gradient(135deg, #093f25 0%, #0e5a36 60%, #166534 100%) !important;
     color: #ffffff !important;
     border: 1.5px solid #cca43b !important;
@@ -310,36 +310,65 @@
     margin-top: 2px !important;
   }
 
-  div[class*="releasit"] button:hover,
-  div[id*="releasit"] button:hover,
-  div[class*="relish"] button:hover,
-  div[id*="relish"] button:hover,
+  div[class*="releasit"] button:not([class*="close"]):hover,
+  div[id*="releasit"] button:not([class*="close"]):hover,
+  div[class*="relish"] button:not([class*="close"]):hover,
+  div[id*="relish"] button:not([class*="close"]):hover,
   .releasit-button:hover,
   .releasit-cod-button:hover,
   .relish-button:hover,
   .relish-cod-button:hover,
   [data-releasit-button]:hover,
   [data-relish-button]:hover,
-  div[class*="cod-"] button:hover,
-  button[class*="cod-"]:hover,
-  .shopify-app-block button:hover,
-  .product-form__buttons + div button:hover,
-  div.product-form__buttons ~ div button:hover {
+  div[class*="cod-"] button:not([class*="close"]):hover,
+  button[class*="cod-"]:not([class*="close"]):hover,
+  .shopify-app-block button:not([class*="close"]):hover,
+  .product-form__buttons + div button:not([class*="close"]):hover,
+  div.product-form__buttons ~ div button:not([class*="close"]):hover {
     background: linear-gradient(135deg, #042414 0%, #093f25 60%, #0e5a36 100%) !important;
     border-color: #fef08a !important;
     transform: translateY(-2px) !important;
     box-shadow: 0 10px 25px -3px rgba(14, 90, 54, 0.55), 0 0 18px rgba(204, 164, 59, 0.35) !important;
   }
 
-  div[class*="releasit"] button *,
-  div[id*="releasit"] button *,
-  div[class*="relish"] button *,
-  div[id*="relish"] button *,
+  div[class*="releasit"] button:not([class*="close"]) *,
+  div[id*="releasit"] button:not([class*="close"]) *,
+  div[class*="relish"] button:not([class*="close"]) *,
+  div[id*="relish"] button:not([class*="close"]) *,
   .releasit-button *,
   .relish-button *,
-  .shopify-app-block button * {
+  .shopify-app-block button:not([class*="close"]) * {
     color: #ffffff !important;
     font-weight: 800 !important;
+  }
+
+  /* Releasit Modal Close (X) Icon Fix */
+  div[class*="releasit"] button[class*="close"],
+  div[id*="releasit"] button[class*="close"],
+  div[class*="releasit"] [class*="close"],
+  div[id*="releasit"] [class*="close"],
+  .releasit-modal-close,
+  .releasit-close,
+  .releasit-close-btn {
+    width: 32px !important;
+    height: 32px !important;
+    min-height: 32px !important;
+    max-width: 32px !important;
+    max-height: 32px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: rgba(0, 0, 0, 0.12) !important;
+    color: #1f2937 !important;
+    border: 1px solid #d1d5db !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    z-index: 9999999 !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
   }
 
   /* Hide duplicate 'Add' or 'Add to Cart' button rendered inside COD App blocks (Releasit/Relish/Shiprocket) */

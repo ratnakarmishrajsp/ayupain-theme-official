@@ -487,5 +487,26 @@
         font-weight: 800 !important;
       }
     </style>
+
+    <!-- RELEASIT POPUP MODAL CLOSE (X) BUTTON CLICK FIX -->
+    <script id="AayuReleasitModalCloseFix">
+      document.addEventListener('click', function(e) {
+        const target = e.target;
+        if (!target) return;
+        
+        // Check if clicked element or parent is a Releasit modal close button / X icon
+        const closeBtn = target.closest('.releasit-modal-close, .releasit-close, .releasit-close-btn, [class*="releasit"] [class*="close"], [id*="releasit"] [class*="close"], [aria-label="Close"], [aria-label="close"]');
+        
+        if (closeBtn) {
+          const modal = document.querySelector('.releasit-modal, .releasit-overlay, .releasit-popup-wrapper, [id*="releasit-modal"], [class*="releasit-modal"], [class*="releasit-popup"]');
+          if (modal) {
+            modal.style.setProperty('display', 'none', 'important');
+            modal.style.setProperty('visibility', 'hidden', 'important');
+            modal.style.setProperty('opacity', '0', 'important');
+            modal.style.setProperty('pointer-events', 'none', 'important');
+          }
+        }
+      }, true);
+    </script>
   </body>
 </html>
