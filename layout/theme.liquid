@@ -398,8 +398,146 @@
       <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
-    {%- if settings.cart_type == 'drawer' -%}
-      <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
-    {%- endif -%}
+    <!-- GLOBAL RELEASIT / STICKY BUY BAR ULTRA-PREMIUM GREEN & GOLD RESTYLER -->
+    <style id="AayuStickyBarGlobalRestyler">
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap');
+
+      /* Restyle any Releasit / COD App Sticky Bar Container to Ayupain Green & Gold */
+      div[class*="releasit-sticky"],
+      div[id*="releasit-sticky"],
+      div[class*="releasit-bar"],
+      div[id*="releasit-bar"],
+      .releasit-sticky-bar,
+      #releasit-sticky-bar,
+      .releasit-sticky-wrapper,
+      #releasit-sticky-wrapper,
+      .releasit-sticky,
+      [data-releasit-sticky],
+      div[class*="releasit"][style*="fixed"],
+      div[id*="releasit"][style*="fixed"] {
+        background: linear-gradient(135deg, #093f25 0%, #0e5a36 60%, #07341e 100%) !important;
+        background-color: #0e5a36 !important;
+        border-top: 2.5px solid #cca43b !important;
+        box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.4) !important;
+        color: #ffffff !important;
+        font-family: 'Poppins', sans-serif !important;
+      }
+
+      /* Restyle Order Now / Buy Button inside Releasit Sticky Bar to Pulsing Gold */
+      div[class*="releasit-sticky"] button,
+      div[id*="releasit-sticky"] button,
+      div[class*="releasit-bar"] button,
+      div[id*="releasit-bar"] button,
+      .releasit-sticky-bar button,
+      #releasit-sticky-bar button,
+      .releasit-sticky button,
+      [data-releasit-sticky] button,
+      div[class*="releasit"][style*="fixed"] button,
+      div[id*="releasit"][style*="fixed"] button {
+        background: linear-gradient(135deg, #cca43b 0%, #e5be53 50%, #b38b2d 100%) !important;
+        background-color: #cca43b !important;
+        color: #093f25 !important;
+        border: 1.5px solid #ffffff !important;
+        border-radius: 30px !important;
+        font-weight: 800 !important;
+        font-size: 13px !important;
+        letter-spacing: 0.5px !important;
+        text-transform: uppercase !important;
+        font-family: 'Poppins', sans-serif !important;
+        box-shadow: 0 4px 15px rgba(204, 164, 59, 0.4) !important;
+      }
+
+      div[class*="releasit-sticky"] button *,
+      div[id*="releasit-sticky"] button *,
+      .releasit-sticky-bar button *,
+      #releasit-sticky-bar button *,
+      .releasit-sticky button *,
+      div[class*="releasit"][style*="fixed"] button * {
+        color: #093f25 !important;
+        font-weight: 800 !important;
+        font-family: 'Poppins', sans-serif !important;
+      }
+
+      /* Restyle text elements inside Releasit sticky bar */
+      div[class*="releasit-sticky"] span,
+      div[id*="releasit-sticky"] span,
+      div[class*="releasit-sticky"] p,
+      div[id*="releasit-sticky"] p,
+      div[class*="releasit-sticky"] div,
+      div[id*="releasit-sticky"] div,
+      .releasit-sticky-bar *,
+      #releasit-sticky-bar * {
+        font-family: 'Poppins', sans-serif !important;
+      }
+
+      /* Price highlight inside Releasit sticky bar */
+      div[class*="releasit-sticky"] [class*="price"],
+      div[id*="releasit-sticky"] [class*="price"],
+      .releasit-sticky-bar [class*="price"] {
+        color: #cca43b !important;
+        font-weight: 800 !important;
+      }
+    </style>
+
+    <script id="AayuStickyBarGlobalRestylerJS">
+      (function() {
+        function restyleStickyElements() {
+          const allElements = document.body ? document.body.getElementsByTagName('*') : [];
+          for (let i = 0; i < allElements.length; i++) {
+            const el = allElements[i];
+            if (!el) continue;
+
+            const style = window.getComputedStyle(el);
+            const isFixedBottom = style.position === 'fixed' && (style.bottom === '0px' || parseInt(style.bottom) <= 5);
+            
+            if (isFixedBottom && !el.classList.contains('aayu-floating-support') && !el.closest('.aayu-floating-support')) {
+              const idClass = (el.id + ' ' + el.className).toLowerCase();
+              const text = (el.innerText || el.textContent || '').toLowerCase();
+              
+              if (idClass.includes('releas') || idClass.includes('realis') || idClass.includes('sticky') || text.includes('order now') || text.includes('cash on delivery') || text.includes('buy now')) {
+                // Apply Green & Gold Theme to container
+                el.style.setProperty('background', 'linear-gradient(135deg, #093f25 0%, #0e5a36 60%, #07341e 100%)', 'important');
+                el.style.setProperty('background-color', '#0e5a36', 'important');
+                el.style.setProperty('border-top', '2.5px solid #cca43b', 'important');
+                el.style.setProperty('box-shadow', '0 -8px 25px rgba(0, 0, 0, 0.4)', 'important');
+                el.style.setProperty('color', '#ffffff', 'important');
+
+                // Restyle all buttons inside container
+                const buttons = el.querySelectorAll('button, a, div[role="button"], input[type="submit"]');
+                buttons.forEach(btn => {
+                  btn.style.setProperty('background', 'linear-gradient(135deg, #cca43b 0%, #e5be53 50%, #b38b2d 100%)', 'important');
+                  btn.style.setProperty('background-color', '#cca43b', 'important');
+                  btn.style.setProperty('color', '#093f25', 'important');
+                  btn.style.setProperty('border', '1.5px solid #ffffff', 'important');
+                  btn.style.setProperty('border-radius', '30px', 'important');
+                  btn.style.setProperty('font-weight', '800', 'important');
+                  btn.style.setProperty('box-shadow', '0 4px 15px rgba(204, 164, 59, 0.4)', 'important');
+                  
+                  const btnChildren = btn.querySelectorAll('*');
+                  btnChildren.forEach(child => {
+                    child.style.setProperty('color', '#093f25', 'important');
+                    child.style.setProperty('font-weight', '800', 'important');
+                  });
+                });
+              }
+            }
+          }
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', restyleStickyElements);
+        } else {
+          restyleStickyElements();
+        }
+
+        setInterval(restyleStickyElements, 250);
+        window.addEventListener('scroll', restyleStickyElements, { passive: true });
+
+        const observer = new MutationObserver(restyleStickyElements);
+        if (document.body) {
+          observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+        }
+      })();
+    </script>
   </body>
 </html>
