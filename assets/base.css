@@ -3634,10 +3634,10 @@ details-disclosure > details {
   box-shadow: 0 8px 20px rgba(14, 90, 54, 0.4) !important;
 }
 
-div[class*="releasit"] button,
-div[id*="releasit"] button,
-div[class*="relish"] button,
-div[id*="relish"] button,
+div[class*="releasit"] button:not([class*="close"]):not([id*="close"]):not([aria-label*="close"]):not(.close),
+div[id*="releasit"] button:not([class*="close"]):not([id*="close"]):not([aria-label*="close"]):not(.close),
+div[class*="relish"] button:not([class*="close"]):not([id*="close"]):not([aria-label*="close"]):not(.close),
+div[id*="relish"] button:not([class*="close"]):not([id*="close"]):not([aria-label*="close"]):not(.close),
 .releasit-button,
 .releasit-cod-button,
 .relish-button,
@@ -3648,16 +3648,16 @@ div[id*="relish"] button,
 [data-relish-button],
 [data-releasit],
 [data-relish],
-form[action*="cod"] button,
-div[class*="cod"] button,
-button[class*="cod"],
-button[id*="cod"],
-.shopify-app-block button,
-.product-form__buttons + div button,
-div.product-form__buttons ~ div button {
+form[action*="cod"] button:not([class*="close"]),
+div[class*="cod"] button:not([class*="close"]),
+button[class*="cod"]:not([class*="close"]),
+button[id*="cod"]:not([class*="close"]),
+.shopify-app-block button:not([class*="close"]),
+.product-form__buttons + div button:not([class*="close"]),
+div.product-form__buttons ~ div button:not([class*="close"]) {
   background: linear-gradient(135deg, #093f25 0%, #0e5a36 60%, #166534 100%) !important;
   color: #ffffff !important;
-  border: 1.5px solid #cca43b !important;
+  border: 2px solid #cca43b !important;
   border-radius: 12px !important;
   font-weight: 800 !important;
   font-size: 1.5rem !important;
@@ -3673,6 +3673,7 @@ div.product-form__buttons ~ div button {
   align-items: center !important;
   justify-content: center !important;
   gap: 8px !important;
+  animation: releasitCodPulse 2.2s infinite ease-in-out !important;
 }
 
 div[class*="releasit"] button:hover,

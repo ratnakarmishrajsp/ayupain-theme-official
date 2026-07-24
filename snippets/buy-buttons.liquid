@@ -273,7 +273,23 @@
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   }
 
-  /* Ultra-Premium Color Grading for Relish / Releasit COD App Buttons (EXCLUDING close buttons) */
+  /* Pulse Glow Animation for Releasit COD Order Now Button */
+  @keyframes releasitCodPulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(204, 164, 59, 0.75), 0 6px 20px -3px rgba(14, 90, 54, 0.4);
+    }
+    50% {
+      transform: scale(1.02);
+      box-shadow: 0 0 0 10px rgba(204, 164, 59, 0), 0 10px 25px -3px rgba(14, 90, 54, 0.6);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(204, 164, 59, 0), 0 6px 20px -3px rgba(14, 90, 54, 0.4);
+    }
+  }
+
+  /* Ultra-Premium Color Grading & Pulse for Relish / Releasit COD App Buttons (EXCLUDING close buttons) */
   div[class*="releasit"] button:not([class*="close"]):not([id*="close"]):not([aria-label*="close"]):not(.close),
   div[id*="releasit"] button:not([class*="close"]):not([id*="close"]):not([aria-label*="close"]):not(.close),
   div[class*="relish"] button:not([class*="close"]):not([id*="close"]):not([aria-label*="close"]):not(.close),
@@ -291,7 +307,7 @@
   div.product-form__buttons ~ div button:not([class*="close"]) {
     background: linear-gradient(135deg, #093f25 0%, #0e5a36 60%, #166534 100%) !important;
     color: #ffffff !important;
-    border: 1.5px solid #cca43b !important;
+    border: 2px solid #cca43b !important;
     border-radius: 12px !important;
     font-weight: 800 !important;
     font-size: 1.5rem !important;
@@ -308,6 +324,7 @@
     justify-content: center !important;
     gap: 8px !important;
     margin-top: 2px !important;
+    animation: releasitCodPulse 2.2s infinite ease-in-out !important;
   }
 
   div[class*="releasit"] button:not([class*="close"]):hover,
