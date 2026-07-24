@@ -3606,9 +3606,79 @@ details-disclosure > details {
   40% {
     transform: translateX(30%) scaleX(0.7);
   }
-  100% {
-    transform: translateX(100%) scaleX(0);
-  }
+/* Global Ultra-Premium Color Grading for Relish / Releasit COD App Buttons & Prepaid CTA */
+div[class*="releasit"] button,
+div[id*="releasit"] button,
+div[class*="relish"] button,
+div[id*="relish"] button,
+.releasit-button,
+.releasit-cod-button,
+.relish-button,
+.relish-cod-button,
+.releasit-btn,
+.releasit-main-btn,
+[data-releasit-button],
+[data-relish-button],
+[data-releasit],
+[data-relish],
+form[action*="cod"] button,
+div[class*="cod"] button,
+button[class*="cod"],
+button[id*="cod"],
+.shopify-app-block button,
+.product-form__buttons + div button,
+div.product-form__buttons ~ div button {
+  background: linear-gradient(135deg, #093f25 0%, #0e5a36 60%, #166534 100%) !important;
+  color: #ffffff !important;
+  border: 1.5px solid #cca43b !important;
+  border-radius: 12px !important;
+  font-weight: 800 !important;
+  font-size: 1.5rem !important;
+  letter-spacing: 0.5px !important;
+  padding: 1.1rem 1.6rem !important;
+  min-height: 52px !important;
+  box-shadow: 0 6px 20px -3px rgba(14, 90, 54, 0.4), 0 0 12px rgba(204, 164, 59, 0.2) !important;
+  transition: all 0.25s ease !important;
+  text-transform: uppercase !important;
+  width: 100% !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
 }
 
+div[class*="releasit"] button:hover,
+div[id*="releasit"] button:hover,
+div[class*="relish"] button:hover,
+div[id*="relish"] button:hover,
+.releasit-button:hover,
+.releasit-cod-button:hover,
+.relish-button:hover,
+.relish-cod-button:hover,
+.releasit-btn:hover,
+.releasit-main-btn:hover,
+[data-releasit-button]:hover,
+[data-relish-button]:hover,
+div[class*="cod"] button:hover,
+button[class*="cod"]:hover,
+button[id*="cod"]:hover,
+.shopify-app-block button:hover,
+.product-form__buttons + div button:hover,
+div.product-form__buttons ~ div button:hover {
+  background: linear-gradient(135deg, #042414 0%, #093f25 60%, #0e5a36 100%) !important;
+  border-color: #fef08a !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 25px -3px rgba(14, 90, 54, 0.55), 0 0 18px rgba(204, 164, 59, 0.35) !important;
+}
 
+div[class*="releasit"] button *,
+div[id*="releasit"] button *,
+div[class*="relish"] button *,
+div[id*="relish"] button *,
+.releasit-button *,
+.relish-button *,
+.shopify-app-block button * {
+  color: #ffffff !important;
+  font-weight: 800 !important;
+}
