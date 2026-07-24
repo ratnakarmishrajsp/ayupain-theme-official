@@ -14,14 +14,25 @@
   }
 {%- endstyle -%}
 
-<div class="page-width page-width--narrow section-{{ section.id }}-padding">
-  <h1 class="main-page-title page-title h0{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-    {{ page.title | escape }}
-  </h1>
-  <div class="rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-    {{ page.content }}
+{% assign page_handle_clean = page.handle | downcase %}
+{% assign page_title_clean = page.title | downcase %}
+
+{% if page_handle_clean contains 'contact' or page_title_clean contains 'contact' %}
+  {% section 'main-contact-page' %}
+{% elsif page_handle_clean contains 'terms' or page_title_clean contains 'terms' %}
+  {% section 'main-terms-conditions' %}
+{% elsif page_handle_clean contains 'refund' or page_handle_clean contains 'cancel' or page_title_clean contains 'refund' or page_title_clean contains 'cancel' %}
+  {% section 'main-refund-cancellation' %}
+{% else %}
+  <div class="page-width page-width--narrow section-{{ section.id }}-padding">
+    <h1 class="main-page-title page-title h0{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+      {{ page.title | escape }}
+    </h1>
+    <div class="rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      {{ page.content }}
+    </div>
   </div>
-</div>
+{% endif %}
 
 {% schema %}
 {
