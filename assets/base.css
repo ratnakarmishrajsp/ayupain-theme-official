@@ -3606,7 +3606,34 @@ details-disclosure > details {
   40% {
     transform: translateX(30%) scaleX(0.7);
   }
-/* Global Ultra-Premium Color Grading for Relish / Releasit COD App Buttons & Prepaid CTA */
+/* Global Ultra-Premium Color Grading for Relish / Releasit COD App Buttons & Prepaid CTA & Add to Cart */
+.btn-add-to-cart-styled {
+  background: #0e5a36 !important;
+  color: #ffffff !important;
+  border: 2px solid #0e5a36 !important;
+  border-radius: 12px !important;
+  padding: 1.1rem 1.6rem !important;
+  min-height: 52px !important;
+  font-size: 1.5rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.8px !important;
+  text-transform: uppercase !important;
+  box-shadow: 0 4px 15px rgba(14, 90, 54, 0.25) !important;
+  transition: all 0.25s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  width: 100% !important;
+}
+
+.btn-add-to-cart-styled:hover {
+  background: #093f25 !important;
+  border-color: #cca43b !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 20px rgba(14, 90, 54, 0.4) !important;
+}
+
 div[class*="releasit"] button,
 div[id*="releasit"] button,
 div[class*="relish"] button,
@@ -3682,3 +3709,4 @@ div[id*="relish"] button *,
   color: #ffffff !important;
   font-weight: 800 !important;
 }
+

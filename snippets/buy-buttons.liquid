@@ -53,7 +53,7 @@
           {%- render 'gift-card-recipient-form', product: product, form: form, section: section -%}
         {%- endif -%}
 
-        <div class="product-form__buttons" style="display: flex; flex-direction: column; gap: 12px;">
+        <div class="product-form__buttons" style="display: flex; flex-direction: column; gap: 10px;">
           {%- liquid
             assign check_against_inventory = true
             if product.selected_or_first_available_variant.inventory_management != 'shopify' or product.selected_or_first_available_variant.inventory_policy == 'continue'
@@ -64,13 +64,37 @@
             endif
           -%}
           
-          <!-- Primary Prepaid Discount Button -> Direct Checkout -->
+          <!-- 1. Topmost Add to Cart Button -->
+          <button
+            id="AddToCartSubmitButton-{{ section_id }}"
+            type="submit"
+            name="add"
+            class="product-form__submit button button--full-width btn-add-to-cart-styled"
+            onclick="if(document.getElementById('returnToCheckoutInput-{{ section_id }}')) document.getElementById('returnToCheckoutInput-{{ section_id }}').value='';"
+            {% if product.selected_or_first_available_variant.available == false
+              or quantity_rule_soldout
+              or product.selected_or_first_available_variant == null
+            %}
+              disabled
+            {% endif %}
+          >
+            <span class="btn-atc-main">
+              {%- if product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
+                {{ 'products.product.sold_out' | t }}
+              {%- else -%}
+                🛒 ADD TO CART
+              {%- endif -%}
+            </span>
+            {%- render 'loading-spinner' -%}
+          </button>
+
+          <!-- 2. Middle Prepaid Discount Button -> Direct Checkout -->
           <button
             id="ProductSubmitButton-{{ section_id }}"
             type="submit"
             name="add"
             class="product-form__submit button button--full-width btn-prepaid-highlight"
-            onclick="document.getElementById('returnToCheckoutInput-{{ section_id }}').value='/checkout';"
+            onclick="if(document.getElementById('returnToCheckoutInput-{{ section_id }}')) document.getElementById('returnToCheckoutInput-{{ section_id }}').value='/checkout';"
             {% if product.selected_or_first_available_variant.available == false
               or quantity_rule_soldout
               or product.selected_or_first_available_variant == null
@@ -145,6 +169,40 @@
 </div>
 
 <style>
+  /* Mobile-Optimized Add To Cart Button */
+  .btn-add-to-cart-styled {
+    background: #0e5a36 !important;
+    color: #ffffff !important;
+    border: 2px solid #0e5a36 !important;
+    border-radius: 12px !important;
+    padding: 1.1rem 1.6rem !important;
+    min-height: 52px !important;
+    font-size: 1.5rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.8px !important;
+    text-transform: uppercase !important;
+    box-shadow: 0 4px 15px rgba(14, 90, 54, 0.25) !important;
+    transition: all 0.25s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    width: 100% !important;
+  }
+  .btn-add-to-cart-styled:hover {
+    background: #093f25 !important;
+    border-color: #cca43b !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(14, 90, 54, 0.4) !important;
+  }
+  .btn-atc-main {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
   /* Ultra-Premium Color Graded Prepaid Discount Button */
   .btn-prepaid-highlight {
     position: relative !important;
@@ -158,6 +216,7 @@
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
     cursor: pointer;
     overflow: hidden !important;
+    width: 100% !important;
   }
   .btn-prepaid-highlight::before {
     content: '';
@@ -248,6 +307,7 @@
     align-items: center !important;
     justify-content: center !important;
     gap: 8px !important;
+    margin-top: 2px !important;
   }
 
   div[class*="releasit"] button:hover,

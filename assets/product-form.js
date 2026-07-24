@@ -44,6 +44,7 @@ if (!customElements.get('product-form')) {
 
         const variantId = formData.get('id');
         const quantity = parseInt(formData.get('quantity')) || 1;
+        const returnTo = formData.get('return_to');
         const linesUpdateDeferred = this.createCartLinesUpdateEvent(variantId, quantity);
 
         fetch(`${routes.cart_add_url}`, config)
@@ -66,6 +67,10 @@ if (!customElements.get('product-form')) {
               this.submitButtonText.classList.add('hidden');
               soldOutMessage.classList.remove('hidden');
               this.error = true;
+              return;
+            } else if (returnTo === '/checkout') {
+              this.resolveCartLinesUpdate(linesUpdateDeferred);
+              window.location.href = '/checkout';
               return;
             } else if (!this.cart) {
               this.resolveCartLinesUpdate(linesUpdateDeferred);
