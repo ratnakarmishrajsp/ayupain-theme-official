@@ -3722,10 +3722,27 @@ div[id*="relish"] button *,
 }
 
 /* ==========================================================================
-   RELEASIT APP STICKY CHECKOUT BAR - ULTRA PREMIUM GREEN & GOLD RESTYLER
+   RELEASIT APP STICKY CHECKOUT BAR & MODAL - GREEN & GOLD THEME RESTYLER
    ========================================================================== */
 
-/* 1. Ensure product pages have enough bottom padding so footer/description is never hidden */
+/* 1. HIDE PRODUCT REMOVE/DELETE CROSS ICON INSIDE RELEASIT FORM MODAL */
+div[class*="releasit"] [class*="remove"],
+div[id*="releasit"] [class*="remove"],
+div[class*="releasit"] [class*="delete"],
+div[id*="releasit"] [class*="delete"],
+div[class*="releasit"] [class*="trash"],
+div[id*="releasit"] [class*="trash"],
+.releasit-cart-item-remove,
+.releasit-item-delete {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* 2. Ensure product pages have enough bottom padding so footer/description is never hidden */
 body.template-product,
 .template-product main,
 .product-section,
@@ -3733,7 +3750,7 @@ body.template-product,
   padding-bottom: 85px !important;
 }
 
-/* 2. Style Releasit / COD App Sticky Bar in Forest Green & Gold Theme */
+/* 3. Style Releasit / COD App Sticky Bar Container in Forest Green & Gold Theme */
 div[class*="releasit-sticky"],
 div[id*="releasit-sticky"],
 div[class*="releasit-bar"],
@@ -3743,7 +3760,9 @@ div[id*="releasit-bar"],
 .releasit-sticky-wrapper,
 #releasit-sticky-wrapper,
 .releasit-sticky,
-[data-releasit-sticky] {
+[data-releasit-sticky],
+div[class*="releasit"][style*="fixed"],
+div[id*="releasit"][style*="fixed"] {
   display: flex !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -3759,19 +3778,43 @@ div[id*="releasit-bar"],
   box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.4) !important;
   color: #ffffff !important;
   padding: 8px 14px !important;
-  font-family: 'Poppins', sans-serif !important;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif !important;
   box-sizing: border-box !important;
+  align-items: center !important;
+  justify-content: space-between !important;
 }
 
-/* 3. Style Buy / Order Now Button inside Releasit Sticky Bar to Pulsing Gold */
-div[class*="releasit-sticky"] button,
-div[id*="releasit-sticky"] button,
-div[class*="releasit-bar"] button,
-div[id*="releasit-bar"] button,
-.releasit-sticky-bar button,
-#releasit-sticky-bar button,
-.releasit-sticky button,
-[data-releasit-sticky] button {
+/* 4. Child containers & background overrides inside Releasit Sticky Bar */
+div[class*="releasit-sticky"] div,
+div[id*="releasit-sticky"] div,
+.releasit-sticky-bar div,
+#releasit-sticky-bar div,
+.releasit-sticky div {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #ffffff !important;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+div[class*="releasit-sticky"] span,
+div[id*="releasit-sticky"] span,
+div[class*="releasit-sticky"] p,
+div[id*="releasit-sticky"] p,
+.releasit-sticky-bar span,
+.releasit-sticky-bar p {
+  color: #ffffff !important;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+/* 5. Style Buy / Order Now Button inside Releasit Sticky Bar to Pulsing Gold */
+div[class*="releasit-sticky"] button:not([class*="close"]),
+div[id*="releasit-sticky"] button:not([class*="close"]),
+div[class*="releasit-bar"] button:not([class*="close"]),
+div[id*="releasit-bar"] button:not([class*="close"]),
+.releasit-sticky-bar button:not([class*="close"]),
+#releasit-sticky-bar button:not([class*="close"]),
+.releasit-sticky button:not([class*="close"]),
+[data-releasit-sticky] button:not([class*="close"]) {
   background: linear-gradient(135deg, #cca43b 0%, #e5be53 50%, #b38b2d 100%) !important;
   background-color: #cca43b !important;
   color: #093f25 !important;
@@ -3784,31 +3827,26 @@ div[id*="releasit-bar"] button,
   font-family: 'Poppins', sans-serif !important;
   box-shadow: 0 4px 15px rgba(204, 164, 59, 0.4) !important;
   padding: 8px 20px !important;
+  margin: 0 !important;
 }
 
-div[class*="releasit-sticky"] button *,
-div[id*="releasit-sticky"] button *,
-.releasit-sticky-bar button *,
-#releasit-sticky-bar button *,
-.releasit-sticky button * {
+div[class*="releasit-sticky"] button:not([class*="close"]) *,
+div[id*="releasit-sticky"] button:not([class*="close"]) *,
+.releasit-sticky-bar button:not([class*="close"]) *,
+#releasit-sticky-bar button:not([class*="close"]) * {
   color: #093f25 !important;
   font-weight: 800 !important;
   font-family: 'Poppins', sans-serif !important;
 }
 
-/* 4. Price & Text styling inside Releasit sticky bar */
-div[class*="releasit-sticky"] *,
-div[id*="releasit-sticky"] *,
-.releasit-sticky-bar * {
-  font-family: 'Poppins', sans-serif !important;
-}
-
+/* 6. Price & Text styling inside Releasit sticky bar */
 div[class*="releasit-sticky"] [class*="price"],
 div[id*="releasit-sticky"] [class*="price"],
 .releasit-sticky-bar [class*="price"] {
   color: #cca43b !important;
   font-weight: 800 !important;
 }
+
 
 
 
