@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main_refund": {
+      "type": "main-refund-cancellation",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main_refund"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main_terms": {
+      "type": "main-terms-conditions",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main_terms"
+  ]
+}
