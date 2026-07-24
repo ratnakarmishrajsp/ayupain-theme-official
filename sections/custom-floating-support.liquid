@@ -2,7 +2,7 @@
   Aayu Pain - Floating WhatsApp/Phone Order Support & Redesigned Sticky Mobile/Desktop Buy Bar
 {% endcomment %}
 
-{% if request.page_type == 'product' or product != blank %}
+{% if template.name == 'product' or template contains 'product' or request.page_type == 'product' or product != blank %}
   {% assign current_variant = product.selected_or_first_available_variant %}
   
   <!-- STICKY ORDER NOW / CASH ON DELIVERY BAR -->
@@ -15,9 +15,9 @@
             src="{{ product.featured_media | image_url: width: 120 }}" 
             alt="{{ product.title | escape }}" 
             class="aayu-sticky-img" 
-            width="46" 
-            height="46" 
-            loading="lazy"
+            width="44" 
+            height="44" 
+            loading="eager"
           >
         {% endif %}
         <div class="aayu-sticky-text-wrap">
@@ -56,7 +56,7 @@
 {% endif %}
 
 {% if section.settings.enable_support %}
-  <div class="aayu-floating-support{% if request.page_type == 'product' or product != blank %} aayu-has-sticky-bar{% endif %}">
+  <div class="aayu-floating-support{% if template.name == 'product' or template contains 'product' or request.page_type == 'product' or product != blank %} aayu-has-sticky-bar{% endif %}">
     {% if section.settings.whatsapp_number != blank %}
       <a
         href="https://wa.me/{{ section.settings.whatsapp_number }}?text=Hello%20AayuPain%20Support,%20I%20want%20to%20order%20AyuPain%20Relief%20Oil"
@@ -330,29 +330,43 @@
 </style>
 
 <script>
-  // MutationObserver to auto-hide any default black sticky bar injected dynamically by Releasit or COD apps
+  // Advanced scanner to auto-suppress ANY third-party black sticky bar injected at bottom of page
   (function() {
-    const hideAppStickyBar = () => {
-      const appStickyElements = document.querySelectorAll('div[class*="releasit-sticky"], div[id*="releasit-sticky"], div[class*="releasit-bar"], div[id*="releasit-bar"], .releasit-sticky-bar, #releasit-sticky-bar, div[class*="realisiit-sticky"], div[id*="realisiit-sticky"], div[class*="cod-sticky"]:not(#AayuStickyBuyBar), div[id*="cod-sticky"]:not(#AayuStickyBuyBar), .easy-cod-sticky-bar');
-      appStickyElements.forEach(el => {
-        if (el && el.id !== 'AayuStickyBuyBar') {
-          el.style.setProperty('display', 'none', 'important');
-          el.style.setProperty('visibility', 'hidden', 'important');
-          el.style.setProperty('opacity', '0', 'important');
-          el.style.setProperty('height', '0', 'important');
-          el.style.setProperty('pointer-events', 'none', 'important');
+    function killOtherStickyBars() {
+      const allElements = document.body ? document.body.getElementsByTagName('*') : [];
+      for (let i = 0; i < allElements.length; i++) {
+        const el = allElements[i];
+        if (!el || el.id === 'AayuStickyBuyBar' || el.closest('#AayuStickyBuyBar') || el.classList.contains('aayu-floating-support') || el.closest('.aayu-floating-support')) {
+          continue;
         }
-      });
-    };
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', hideAppStickyBar);
-    } else {
-      hideAppStickyBar();
+        const style = window.getComputedStyle(el);
+        if (style.position === 'fixed' && (style.bottom === '0px' || parseInt(style.bottom) <= 5)) {
+          const text = (el.innerText || el.textContent || '').toLowerCase();
+          const idClass = (el.id + ' ' + el.className).toLowerCase();
+          
+          if (idClass.includes('releas') || idClass.includes('realis') || idClass.includes('sticky') || idClass.includes('cod') || text.includes('order now') || text.includes('cash on delivery') || text.includes('buy now')) {
+            el.style.setProperty('display', 'none', 'important');
+            el.style.setProperty('visibility', 'hidden', 'important');
+            el.style.setProperty('opacity', '0', 'important');
+            el.style.setProperty('pointer-events', 'none', 'important');
+          }
+        }
+      }
     }
 
-    const observer = new MutationObserver(hideAppStickyBar);
-    observer.observe(document.body || document.documentElement, { childList: true, subtree: true });
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', killOtherStickyBars);
+    } else {
+      killOtherStickyBars();
+    }
+
+    setInterval(killOtherStickyBars, 300);
+
+    const observer = new MutationObserver(killOtherStickyBars);
+    if (document.body) {
+      observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+    }
   })();
 
   function aayuTriggerRealisiitCod(e) {
