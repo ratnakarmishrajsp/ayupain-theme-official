@@ -341,4 +341,57 @@
     color: #ffffff !important;
     font-weight: 800 !important;
   }
+
+  /* Hide duplicate 'Add' or 'Add to Cart' button rendered inside COD App blocks (Releasit/Relish/Shiprocket) */
+  .shopify-app-block button.secondary,
+  .shopify-app-block .releasit-add-to-cart,
+  .shopify-app-block .relish-add-to-cart,
+  .releasit-secondary-button,
+  .relish-secondary-button,
+  [data-releasit-type="add-to-cart"],
+  [data-relish-type="add-to-cart"] {
+    display: none !important;
+  }
 </style>
+
+<script>
+  (function() {
+    function hideDuplicateAppAddButtons() {
+      const appContainers = document.querySelectorAll('.shopify-app-block, div[class*="releasit"], div[id*="releasit"], div[class*="relish"], div[id*="relish"], [class*="cod-"]');
+      appContainers.forEach(function(container) {
+        const buttons = container.querySelectorAll('button, a.btn, div[role="button"]');
+        if (buttons.length > 1) {
+          buttons.forEach(function(btn, idx) {
+            const text = (btn.textContent || '').trim().toLowerCase();
+            if ((text === 'add' || text === 'add to cart' || text.startsWith('add ')) && !text.includes('delivery') && !text.includes('cod') && !text.includes('cash')) {
+              btn.style.setProperty('display', 'none', 'important');
+            }
+          });
+        } else if (buttons.length === 1) {
+          const btn = buttons[0];
+          const text = (btn.textContent || '').trim().toLowerCase();
+          if ((text === 'add' || text === 'add to cart') && !text.includes('delivery') && !text.includes('cod')) {
+            btn.style.setProperty('display', 'none', 'important');
+          }
+        }
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', hideDuplicateAppAddButtons);
+    } else {
+      hideDuplicateAppAddButtons();
+    }
+    window.addEventListener('load', hideDuplicateAppAddButtons);
+    setTimeout(hideDuplicateAppAddButtons, 300);
+    setTimeout(hideDuplicateAppAddButtons, 1000);
+    setTimeout(hideDuplicateAppAddButtons, 2500);
+
+    try {
+      const observer = new MutationObserver(function() {
+        hideDuplicateAppAddButtons();
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+    } catch(e) {}
+  })();
+</script>

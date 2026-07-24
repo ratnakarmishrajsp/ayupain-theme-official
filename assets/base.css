@@ -3710,3 +3710,15 @@ div[id*="relish"] button *,
   font-weight: 800 !important;
 }
 
+/* Hide duplicate 'Add' or 'Add to Cart' button rendered inside COD App blocks */
+.shopify-app-block button.secondary,
+.shopify-app-block .releasit-add-to-cart,
+.shopify-app-block .relish-add-to-cart,
+.releasit-secondary-button,
+.relish-secondary-button,
+[data-releasit-type="add-to-cart"],
+[data-relish-type="add-to-cart"] {
+  display: none !important;
+}
+
+
