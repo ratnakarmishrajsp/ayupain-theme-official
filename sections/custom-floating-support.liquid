@@ -86,32 +86,6 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap');
 
-  /* FORCE HIDE RELEASIT / THIRD-PARTY APP DEFAULT BLACK STICKY BARS */
-  div[class*="releasit-sticky"],
-  div[id*="releasit-sticky"],
-  div[class*="releasit-bar"],
-  div[id*="releasit-bar"],
-  .releasit-sticky-bar,
-  #releasit-sticky-bar,
-  .releasit-sticky-wrapper,
-  #releasit-sticky-wrapper,
-  div[class*="realisiit-sticky"],
-  div[id*="realisiit-sticky"],
-  div[class*="cod-sticky"]:not(#AayuStickyBuyBar),
-  div[id*="cod-sticky"]:not(#AayuStickyBuyBar),
-  div[class*="easy-cod-sticky"],
-  div[id*="easy-cod-sticky"],
-  .realisiit-floating-bar,
-  .realisiit-sticky-bar,
-  #realisiit-sticky-bar,
-  .easy-cod-sticky-bar {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    height: 0 !important;
-    pointer-events: none !important;
-  }
-
   /* FLOATING SUPPORT WIDGET */
   .aayu-floating-support {
     position: fixed !important;
@@ -330,45 +304,6 @@
 </style>
 
 <script>
-  // Advanced scanner to auto-suppress ANY third-party black sticky bar injected at bottom of page
-  (function() {
-    function killOtherStickyBars() {
-      const allElements = document.body ? document.body.getElementsByTagName('*') : [];
-      for (let i = 0; i < allElements.length; i++) {
-        const el = allElements[i];
-        if (!el || el.id === 'AayuStickyBuyBar' || el.closest('#AayuStickyBuyBar') || el.classList.contains('aayu-floating-support') || el.closest('.aayu-floating-support')) {
-          continue;
-        }
-
-        const style = window.getComputedStyle(el);
-        if (style.position === 'fixed' && (style.bottom === '0px' || parseInt(style.bottom) <= 5)) {
-          const text = (el.innerText || el.textContent || '').toLowerCase();
-          const idClass = (el.id + ' ' + el.className).toLowerCase();
-          
-          if (idClass.includes('releas') || idClass.includes('realis') || idClass.includes('sticky') || idClass.includes('cod') || text.includes('order now') || text.includes('cash on delivery') || text.includes('buy now')) {
-            el.style.setProperty('display', 'none', 'important');
-            el.style.setProperty('visibility', 'hidden', 'important');
-            el.style.setProperty('opacity', '0', 'important');
-            el.style.setProperty('pointer-events', 'none', 'important');
-          }
-        }
-      }
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', killOtherStickyBars);
-    } else {
-      killOtherStickyBars();
-    }
-
-    setInterval(killOtherStickyBars, 300);
-
-    const observer = new MutationObserver(killOtherStickyBars);
-    if (document.body) {
-      observer.observe(document.body, { childList: true, subtree: true, attributes: true });
-    }
-  })();
-
   function aayuTriggerRealisiitCod(e) {
     if (e) e.preventDefault();
     
