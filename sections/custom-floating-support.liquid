@@ -1,9 +1,62 @@
 {% comment %}
-  Aayu Pain - Floating WhatsApp/Phone Order Support & Sticky Mobile Buy Bar
+  Aayu Pain - Floating WhatsApp/Phone Order Support & Redesigned Sticky Mobile/Desktop Buy Bar
 {% endcomment %}
 
+{% if request.page_type == 'product' or product != blank %}
+  {% assign current_variant = product.selected_or_first_available_variant %}
+  
+  <!-- STICKY ORDER NOW / CASH ON DELIVERY BAR -->
+  <div class="aayu-sticky-buy-bar" id="AayuStickyBuyBar">
+    <div class="aayu-sticky-container">
+      <!-- LEFT SIDE: PRODUCT DETAILS & PRICING -->
+      <div class="aayu-sticky-product-info">
+        {% if product.featured_media != blank %}
+          <img 
+            src="{{ product.featured_media | image_url: width: 120 }}" 
+            alt="{{ product.title | escape }}" 
+            class="aayu-sticky-img" 
+            width="46" 
+            height="46" 
+            loading="lazy"
+          >
+        {% endif %}
+        <div class="aayu-sticky-text-wrap">
+          <div class="aayu-sticky-title">{{ product.title | default: "Yupain™ Pain Relief Oil" }}</div>
+          <div class="aayu-sticky-price-row">
+            <span class="aayu-sticky-price">{{ current_variant.price | money }}</span>
+            {% if current_variant.compare_at_price > current_variant.price %}
+              <s class="aayu-sticky-compare-price">{{ current_variant.compare_at_price | money }}</s>
+              {% assign savings = current_variant.compare_at_price | minus: current_variant.price | times: 100 | divided_by: current_variant.compare_at_price %}
+              <span class="aayu-sticky-discount-pill">{{ savings }}% OFF</span>
+            {% else %}
+              <span class="aayu-sticky-discount-pill">FREE COD</span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT SIDE: ORDER NOW (CASH ON DELIVERY) BUTTON -->
+      <div class="aayu-sticky-cta-wrap">
+        <button 
+          type="button" 
+          class="aayu-sticky-order-btn" 
+          id="AayuStickyCodTriggerBtn" 
+          onclick="aayuTriggerRealisiitCod(event)"
+          aria-label="Order Now Cash on Delivery"
+        >
+          <span class="aayu-sticky-btn-icon">⚡</span>
+          <div class="aayu-sticky-btn-text-group">
+            <span class="aayu-sticky-btn-main">ORDER NOW</span>
+            <span class="aayu-sticky-btn-sub">CASH ON DELIVERY</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
 {% if section.settings.enable_support %}
-  <div class="aayu-floating-support">
+  <div class="aayu-floating-support{% if request.page_type == 'product' or product != blank %} aayu-has-sticky-bar{% endif %}">
     {% if section.settings.whatsapp_number != blank %}
       <a
         href="https://wa.me/{{ section.settings.whatsapp_number }}?text=Hello%20AayuPain%20Support,%20I%20want%20to%20order%20AyuPain%20Relief%20Oil"
@@ -13,7 +66,7 @@
         aria-label="Order via WhatsApp"
         title="Order via WhatsApp"
       >
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
       </a>
     {% endif %}
 
@@ -24,48 +77,349 @@
         aria-label="Call for Order Support"
         title="Call for Order Support"
       >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
       </a>
     {% endif %}
   </div>
 {% endif %}
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap');
+
+  /* FORCE HIDE RELEASIT / THIRD-PARTY APP DEFAULT BLACK STICKY BARS */
+  div[class*="releasit-sticky"],
+  div[id*="releasit-sticky"],
+  div[class*="releasit-bar"],
+  div[id*="releasit-bar"],
+  .releasit-sticky-bar,
+  #releasit-sticky-bar,
+  .releasit-sticky-wrapper,
+  #releasit-sticky-wrapper,
+  div[class*="realisiit-sticky"],
+  div[id*="realisiit-sticky"],
+  div[class*="cod-sticky"]:not(#AayuStickyBuyBar),
+  div[id*="cod-sticky"]:not(#AayuStickyBuyBar),
+  div[class*="easy-cod-sticky"],
+  div[id*="easy-cod-sticky"],
+  .realisiit-floating-bar,
+  .realisiit-sticky-bar,
+  #realisiit-sticky-bar,
+  .easy-cod-sticky-bar {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* FLOATING SUPPORT WIDGET */
   .aayu-floating-support {
-    position: fixed;
-    bottom: 25px;
-    right: 20px;
-    z-index: 98;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    position: fixed !important;
+    bottom: 25px !important;
+    right: 18px !important;
+    z-index: 2147483646 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    transition: bottom 0.3s ease !important;
+  }
+  .aayu-floating-support.aayu-has-sticky-bar {
+    bottom: 82px !important;
   }
   .aayu-support-btn {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #ffffff;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    transition: transform 0.2s ease;
-    text-decoration: none;
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.25) !important;
+    transition: transform 0.2s ease !important;
+    text-decoration: none !important;
   }
   .aayu-support-btn:hover {
-    transform: scale(1.1);
+    transform: scale(1.1) !important;
   }
   .aayu-support-whatsapp {
-    background: #25D366;
+    background: #25D366 !important;
   }
   .aayu-support-phone {
-    background: #0e5a36;
+    background: #0e5a36 !important;
+  }
+
+  /* STICKY BUY BAR STYLING */
+  .aayu-sticky-buy-bar {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    z-index: 2147483647 !important;
+    background: linear-gradient(135deg, #093f25 0%, #0e5a36 60%, #07341e 100%) !important;
+    border-top: 2.5px solid #cca43b !important;
+    box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.4) !important;
+    padding: 8px 14px !important;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    box-sizing: border-box !important;
+    backdrop-filter: blur(8px) !important;
+    display: flex !important;
+  }
+
+  .aayu-sticky-container {
+    max-width: 1200px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+  }
+
+  /* LEFT SIDE: PRODUCT INFO & PRICING */
+  .aayu-sticky-product-info {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    min-width: 0 !important;
+    flex: 1 !important;
+  }
+
+  .aayu-sticky-img {
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 8px !important;
+    object-fit: cover !important;
+    border: 1.5px solid #cca43b !important;
+    background: #ffffff !important;
+    flex-shrink: 0 !important;
+  }
+
+  .aayu-sticky-text-wrap {
+    display: flex !important;
+    flex-direction: column !important;
+    min-width: 0 !important;
+  }
+
+  .aayu-sticky-title {
+    color: #ffffff !important;
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    line-height: 1.25 !important;
+  }
+
+  .aayu-sticky-price-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    margin-top: 2px !important;
+  }
+
+  .aayu-sticky-price {
+    color: #cca43b !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+  }
+
+  .aayu-sticky-compare-price {
+    color: #9ca3af !important;
+    font-size: 12px !important;
+    text-decoration: line-through !important;
+    line-height: 1 !important;
+  }
+
+  .aayu-sticky-discount-pill {
+    background: #cca43b !important;
+    color: #093f25 !important;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    padding: 2px 6px !important;
+    border-radius: 4px !important;
+    line-height: 1 !important;
+    letter-spacing: 0.3px !important;
+  }
+
+  /* RIGHT SIDE: ORDER NOW COD BUTTON */
+  .aayu-sticky-cta-wrap {
+    flex-shrink: 0 !important;
+  }
+
+  .aayu-sticky-order-btn {
+    background: linear-gradient(135deg, #cca43b 0%, #e5be53 50%, #b38b2d 100%) !important;
+    color: #093f25 !important;
+    border: 1.5px solid #ffffff !important;
+    border-radius: 30px !important;
+    padding: 8px 18px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 15px rgba(204, 164, 59, 0.4) !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    animation: aayuStickyBtnPulse 2.5s infinite !important;
+  }
+
+  @keyframes aayuStickyBtnPulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(204, 164, 59, 0.6); }
+    50% { transform: scale(1.03); box-shadow: 0 0 0 8px rgba(204, 164, 59, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(204, 164, 59, 0); }
+  }
+
+  .aayu-sticky-order-btn:hover {
+    transform: translateY(-2px) scale(1.04) !important;
+    background: linear-gradient(135deg, #e5be53 0%, #fef08a 100%) !important;
+  }
+
+  .aayu-sticky-btn-icon {
+    font-size: 16px !important;
+    line-height: 1 !important;
+  }
+
+  .aayu-sticky-btn-text-group {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    line-height: 1.1 !important;
+  }
+
+  .aayu-sticky-btn-main {
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.6px !important;
+    color: #093f25 !important;
+  }
+
+  .aayu-sticky-btn-sub {
+    font-size: 9px !important;
+    font-weight: 700 !important;
+    color: #15803d !important;
+    letter-spacing: 0.4px !important;
+  }
+
+  /* MOBILE RESPONSIVE ADJUSTMENTS */
+  @media (max-width: 640px) {
+    .aayu-sticky-buy-bar {
+      padding: 6px 10px !important;
+    }
+    .aayu-sticky-img {
+      width: 38px !important;
+      height: 38px !important;
+    }
+    .aayu-sticky-title {
+      font-size: 12px !important;
+      max-width: 140px !important;
+    }
+    .aayu-sticky-price {
+      font-size: 14px !important;
+    }
+    .aayu-sticky-order-btn {
+      padding: 7px 14px !important;
+      border-radius: 25px !important;
+    }
+    .aayu-sticky-btn-main {
+      font-size: 12px !important;
+    }
+    .aayu-sticky-btn-sub {
+      font-size: 8.5px !important;
+    }
   }
 </style>
 
+<script>
+  // MutationObserver to auto-hide any default black sticky bar injected dynamically by Releasit or COD apps
+  (function() {
+    const hideAppStickyBar = () => {
+      const appStickyElements = document.querySelectorAll('div[class*="releasit-sticky"], div[id*="releasit-sticky"], div[class*="releasit-bar"], div[id*="releasit-bar"], .releasit-sticky-bar, #releasit-sticky-bar, div[class*="realisiit-sticky"], div[id*="realisiit-sticky"], div[class*="cod-sticky"]:not(#AayuStickyBuyBar), div[id*="cod-sticky"]:not(#AayuStickyBuyBar), .easy-cod-sticky-bar');
+      appStickyElements.forEach(el => {
+        if (el && el.id !== 'AayuStickyBuyBar') {
+          el.style.setProperty('display', 'none', 'important');
+          el.style.setProperty('visibility', 'hidden', 'important');
+          el.style.setProperty('opacity', '0', 'important');
+          el.style.setProperty('height', '0', 'important');
+          el.style.setProperty('pointer-events', 'none', 'important');
+        }
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', hideAppStickyBar);
+    } else {
+      hideAppStickyBar();
+    }
+
+    const observer = new MutationObserver(hideAppStickyBar);
+    observer.observe(document.body || document.documentElement, { childList: true, subtree: true });
+  })();
+
+  function aayuTriggerRealisiitCod(e) {
+    if (e) e.preventDefault();
+    
+    // 1. Array of standard Releasit / Realisiit & COD App trigger selectors
+    const releasitSelectors = [
+      '.releasit-button',
+      '.releasit-btn',
+      '.releasit-buy-now',
+      '[data-releasit]',
+      '#releasit-button',
+      '.releasit-form button',
+      '.realisiit-btn',
+      '.realisiit-button',
+      '.realisiit-buy-now',
+      '[data-realisiit]',
+      '#realisiit-button',
+      '.relisizit-btn',
+      '.easy-cod-btn',
+      'button[data-cod-button]',
+      '.cod-btn-trigger',
+      '.realisiit-pop-up-trigger',
+      '.btn-prepaid-highlight'
+    ];
+    
+    // Attempt to find any matching Releasit button on the page
+    for (let selector of releasitSelectors) {
+      const btn = document.querySelector(selector);
+      if (btn && btn !== document.getElementById('AayuStickyCodTriggerBtn')) {
+        btn.click();
+        return;
+      }
+    }
+    
+    // 2. Search for any elements containing "releas" or "realis" or COD in ID/class or text
+    const allButtons = Array.from(document.querySelectorAll('button, a, div[role="button"], input[type="submit"]'));
+    const releasitMatch = allButtons.find(b => {
+      if (b.id === 'AayuStickyCodTriggerBtn') return false;
+      const text = (b.innerText || b.value || b.textContent || '').toLowerCase();
+      const idClass = (b.id + ' ' + b.className).toLowerCase();
+      return idClass.includes('releas') || idClass.includes('realis') || idClass.includes('relis') || text.includes('cash on delivery') || text.includes('cod order');
+    });
+
+    if (releasitMatch) {
+      releasitMatch.click();
+      return;
+    }
+
+    // 3. Fallback: Trigger main product form button
+    const productFormSubmit = document.querySelector('product-form button[type="submit"], form[action*="/cart/add"] button[type="submit"]');
+    if (productFormSubmit) {
+      productFormSubmit.click();
+      return;
+    }
+
+    // 4. Ultimate Fallback: Scroll to main product form
+    const productForm = document.querySelector('product-form, form[action*="/cart/add"]');
+    if (productForm) {
+      productForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+</script>
+
 {% schema %}
 {
-  "name": "Floating Support Widget",
+  "name": "Floating Support & Sticky",
   "tag": "section",
   "class": "section",
   "settings": [

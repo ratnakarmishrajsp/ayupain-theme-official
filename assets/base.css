@@ -3721,4 +3721,23 @@ div[id*="relish"] button *,
   display: none !important;
 }
 
+/* Force Hide Releasit / Third-Party Default Black Sticky Bars */
+div[class*="releasit-sticky"],
+div[id*="releasit-sticky"],
+div[class*="releasit-bar"],
+div[id*="releasit-bar"],
+.releasit-sticky-bar,
+#releasit-sticky-bar,
+.releasit-sticky-wrapper,
+#releasit-sticky-wrapper,
+div[class*="realisiit-sticky"],
+div[id*="realisiit-sticky"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  pointer-events: none !important;
+}
+
+
 
