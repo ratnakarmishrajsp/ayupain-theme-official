@@ -3849,12 +3849,12 @@ div[id*="releasit-sticky"] [class*="price"],
 }
 
 /* ==========================================================================
-   AYUPAIN LOGO OPTIMIZATION (MOBILE & LAPTOP / DESKTOP RESPONSIVE STYLING)
+   AYUPAIN LOGO & HEADER RESPONSIVE OPTIMIZATION (MOBILE & DESKTOP)
    ========================================================================== */
 .header__heading-link {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  padding: 0.3rem 0.5rem;
+  padding: 0.2rem 0.4rem;
   text-decoration: none;
 }
 
@@ -3862,54 +3862,48 @@ div[id*="releasit-sticky"] [class*="price"],
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #ffffff;
-  padding: 4px 10px;
-  border-radius: 10px;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+  border: none;
   transition: all 0.3s ease;
 }
 
-.ayupain-logo-container:hover {
-  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.22);
-  transform: translateY(-1px);
-}
-
 .ayupain-custom-logo {
-  height: 58px;
+  height: 48px;
   width: auto;
-  max-width: 160px;
+  max-width: 150px;
   object-fit: contain;
   display: block;
-  transition: height 0.3s ease, transform 0.3s ease;
+  transition: height 0.25s ease, max-width 0.25s ease;
 }
 
-/* Sticky Header Scrolled State - Compact logo on scroll */
-.scrolled-past-header .ayupain-logo-container {
-  padding: 2px 7px;
-  border-radius: 8px;
-}
-
+/* Sticky Header Scrolled State - Sleek & Compact */
 .scrolled-past-header .ayupain-custom-logo {
-  height: 42px;
+  height: 38px;
   max-width: 120px;
 }
 
-/* Mobile Devices (Smartphones <= 749px) */
+/* Mobile Devices (Smartphones <= 749px) - Extremely Compact & Crisp */
 @media screen and (max-width: 749px) {
-  .ayupain-logo-container {
-    padding: 3px 8px;
-    border-radius: 8px;
+  .header__heading-link {
+    padding: 0.1rem 0.2rem;
   }
 
   .ayupain-custom-logo {
-    height: 44px;
-    max-width: 125px;
+    height: 36px;
+    max-width: 110px;
   }
 
   .scrolled-past-header .ayupain-custom-logo {
-    height: 36px;
-    max-width: 100px;
+    height: 30px;
+    max-width: 95px;
+  }
+
+  .header {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
   }
 }
 
