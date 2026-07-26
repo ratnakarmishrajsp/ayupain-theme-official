@@ -1,0 +1,134 @@
+{% comment %}
+  AyuPain Animated "Order via WhatsApp" Product Button
+  - Positioned right below Quantity / Buy Buttons and above Description
+{% endcomment %}
+
+<div class="aayu-product-wa-wrapper" {{ block.shopify_attributes }}>
+  <a
+    href="https://wa.me/918197383570?text=Hi%2C%20I%20want%20to%20order%20AyuPain%20Relief%20Oil"
+    target="_blank"
+    rel="noopener"
+    class="aayu-wa-order-btn"
+    title="Order AyuPain Relief Oil via WhatsApp"
+  >
+    <div class="aayu-wa-btn-content">
+      <svg viewBox="0 0 32 32" width="28" height="28" fill="#ffffff" class="aayu-wa-btn-icon">
+        <path d="M16 2a13.9 13.9 0 0 0-12 21L2 30l7.2-1.9A13.9 13.9 0 1 0 16 2zm7.9 19.8c-.3.9-1.8 1.7-2.5 1.8-.7.1-1.6.2-5.2-1.3-4.4-1.8-7.2-6.2-7.4-6.5-.2-.3-1.8-2.4-1.8-4.5 0-2.2 1.1-3.2 1.5-3.7.4-.4.9-.6 1.2-.6s.6 0 .9.1c.3 0 .7-.1 1 .7.4 1 1.3 3.1 1.4 3.3.1.2.2.5 0 .8-.2.3-.3.5-.5.7-.2.2-.5.5-.2 1 .5.9 2.2 3.6 4.8 4.7.7.3 1.3.4 1.8.2.6-.2 1.8-1.5 2.3-2.1.5-.6 1-.5 1.6-.3.6.2 3.7 1.7 4.3 2 .6.3 1 .5 1.1.7.1.3.1 1.4-.2 2.3z"/>
+      </svg>
+      <div class="aayu-wa-btn-text">
+        <span class="aayu-wa-btn-main">💬 ORDER VIA WHATSAPP (WhatsApp पर ऑर्डर करें)</span>
+        <span class="aayu-wa-btn-sub">⚡ 1-Tap Fast COD Order Assistance</span>
+      </div>
+    </div>
+  </a>
+</div>
+
+<style>
+  .aayu-product-wa-wrapper {
+    margin: 1.5rem 0;
+    width: 100%;
+  }
+
+  .aayu-wa-order-btn {
+    display: block;
+    width: 100%;
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    color: #ffffff !important;
+    text-decoration: none !important;
+    padding: 12px 18px;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(37, 211, 102, 0.35);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: aayu-pulse-glow 2.5s infinite ease-in-out;
+  }
+
+  .aayu-wa-order-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(37, 211, 102, 0.45);
+    background: linear-gradient(135deg, #28e16f 0%, #149c8c 100%);
+  }
+
+  /* Shimmering Glint Animation Effect */
+  .aayu-wa-order-btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 40%;
+    height: 200%;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.35) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(30deg);
+    animation: aayu-shimmer 3s infinite ease-in-out;
+  }
+
+  @keyframes aayu-shimmer {
+    0% { left: -60%; }
+    20% { left: 140%; }
+    100% { left: 140%; }
+  }
+
+  @keyframes aayu-pulse-glow {
+    0%, 100% {
+      box-shadow: 0 6px 18px rgba(37, 211, 102, 0.35);
+    }
+    50% {
+      box-shadow: 0 8px 26px rgba(37, 211, 102, 0.6);
+    }
+  }
+
+  .aayu-wa-btn-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .aayu-wa-btn-icon {
+    flex-shrink: 0;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+  }
+
+  .aayu-wa-btn-text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+
+  .aayu-wa-btn-main {
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  }
+
+  .aayu-wa-btn-sub {
+    font-size: 11px;
+    font-weight: 600;
+    opacity: 0.95;
+    margin-top: 2px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .aayu-wa-order-btn {
+      padding: 10px 14px;
+    }
+    .aayu-wa-btn-main {
+      font-size: 13px;
+    }
+    .aayu-wa-btn-sub {
+      font-size: 10px;
+    }
+  }
+</style>
