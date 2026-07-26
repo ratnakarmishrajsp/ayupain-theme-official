@@ -3907,6 +3907,21 @@ div[id*="releasit-sticky"] [class*="price"],
   }
 }
 
+/* ==========================================================================
+   HIDE SEARCH-PLUS / ZOOM CIRCLE ICON ON PRODUCT IMAGE TOP-LEFT CORNER
+   ========================================================================== */
+.product__modal-opener--image .product__media-icon,
+.product__media-icon,
+.product__media-icon--image,
+.product__media-icon--zoom,
+.product__media-icon--lightbox,
+span.product__media-icon {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 
 
 

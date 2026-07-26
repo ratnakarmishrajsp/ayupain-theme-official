@@ -462,26 +462,22 @@ a.product__text {
   height: 1.4rem;
 }
 
+/* Hide Search Plus / Zoom Circle Icon on Product Image Top-Left Corner */
+.product__modal-opener--image .product__media-icon,
 .product__media-icon,
-.thumbnail__badge {
-  background-color: rgb(var(--color-background));
-  border-radius: 50%;
-  border: 0.1rem solid rgba(var(--color-foreground), 0.1);
-  color: rgb(var(--color-foreground));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 3rem;
-  width: 3rem;
-  position: absolute;
-  left: 1.2rem;
-  top: 1.2rem;
-  z-index: 1;
-  transition: color var(--duration-short) ease, opacity var(--duration-short) ease;
+.product__media-icon--image,
+.product__media-icon--zoom,
+.product__media-icon--lightbox {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 .product__media-video .product__media-icon {
-  opacity: 1;
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .product__modal-opener--image .product__media-toggle:hover {
