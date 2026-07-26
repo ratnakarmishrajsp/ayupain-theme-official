@@ -3848,6 +3848,72 @@ div[id*="releasit-sticky"] [class*="price"],
   font-weight: 800 !important;
 }
 
+/* ==========================================================================
+   AYUPAIN LOGO OPTIMIZATION (MOBILE & LAPTOP / DESKTOP RESPONSIVE STYLING)
+   ========================================================================== */
+.header__heading-link {
+  display: flex;
+  align-items: center;
+  padding: 0.3rem 0.5rem;
+  text-decoration: none;
+}
+
+.ayupain-logo-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  padding: 4px 10px;
+  border-radius: 10px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.ayupain-logo-container:hover {
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.22);
+  transform: translateY(-1px);
+}
+
+.ayupain-custom-logo {
+  height: 58px;
+  width: auto;
+  max-width: 160px;
+  object-fit: contain;
+  display: block;
+  transition: height 0.3s ease, transform 0.3s ease;
+}
+
+/* Sticky Header Scrolled State - Compact logo on scroll */
+.scrolled-past-header .ayupain-logo-container {
+  padding: 2px 7px;
+  border-radius: 8px;
+}
+
+.scrolled-past-header .ayupain-custom-logo {
+  height: 42px;
+  max-width: 120px;
+}
+
+/* Mobile Devices (Smartphones <= 749px) */
+@media screen and (max-width: 749px) {
+  .ayupain-logo-container {
+    padding: 3px 8px;
+    border-radius: 8px;
+  }
+
+  .ayupain-custom-logo {
+    height: 44px;
+    max-width: 125px;
+  }
+
+  .scrolled-past-header .ayupain-custom-logo {
+    height: 36px;
+    max-width: 100px;
+  }
+}
+
+
 
 
 

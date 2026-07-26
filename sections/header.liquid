@@ -172,7 +172,16 @@
             }}
           </div>
         {%- else -%}
-          <span class="h2">{{ shop.name }}</span>
+          <div class="header__heading-logo-wrapper ayupain-logo-container">
+            <img
+              src="{{ 'ayupain-logo.png' | asset_url }}"
+              alt="{{ shop.name }} - Pure Ayurvedic Pain Relief Oil"
+              class="header__heading-logo motion-reduce ayupain-custom-logo"
+              width="140"
+              height="140"
+              loading="eager"
+            >
+          </div>
         {%- endif -%}
       </a>
       {%- if request.page_type == 'index' -%}
@@ -215,7 +224,16 @@
             }}
           </div>
         {%- else -%}
-          <span class="h2">{{ shop.name }}</span>
+          <div class="header__heading-logo-wrapper ayupain-logo-container">
+            <img
+              src="{{ 'ayupain-logo.png' | asset_url }}"
+              alt="{{ shop.name }} - Pure Ayurvedic Pain Relief Oil"
+              class="header__heading-logo motion-reduce ayupain-custom-logo"
+              width="140"
+              height="140"
+              loading="eager"
+            >
+          </div>
         {%- endif -%}
       </a>
       {%- if request.page_type == 'index' -%}
