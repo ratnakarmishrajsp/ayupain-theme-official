@@ -193,6 +193,7 @@
                     {%- endif -%}
                   </p>
                 {%- when 'description' -%}
+                  {% render 'aayu-product-whatsapp-btn', block: block %}
                   {%- if product.description != blank -%}
                     <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
                       {{ product.description }}
@@ -499,7 +500,6 @@
                     section_id: section.id,
                     show_pickup_availability: true
                   -%}
-                  {% render 'aayu-product-whatsapp-btn', block: block %}
                 {%- when 'rating' -%}
                   {%- if product.metafields.reviews.rating.value != blank -%}
                     <div class="rating-wrapper">
