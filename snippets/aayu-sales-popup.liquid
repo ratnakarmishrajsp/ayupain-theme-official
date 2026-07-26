@@ -1,26 +1,25 @@
 {% comment %}
   AyuPain Live Sales Notification Pop-up Toast
-  - 12 Verified Indian customer order notifications
+  - Alternating English & Hindi Verified Order Notifications
+  - Clean Product Name: Pain Relief Oil
   - Non-intrusive bottom-left placement (positioned safely above sticky bars)
-  - Auto-cycling with smooth slide/fade animations & session dismiss
 {% endcomment %}
 
 <div id="aayu-sales-toast" class="aayu-sales-toast" aria-live="polite">
-  <button type="button" class="aayu-sales-close" id="aayu-sales-close-btn" aria-label="Close notification">&times;</button>
+  <button type="button" class="aayu-sales-close" id="aayu-sales-close-btn" aria-label="Close">&times;</button>
   <div class="aayu-sales-content">
     <div class="aayu-sales-img-wrap">
-      <img src="{{ 'karnataka-adivasi-vaidya.png' | asset_url }}" alt="AyuPain Relief Oil" width="50" height="50" loading="lazy">
+      <img src="{{ 'ayupain-logo-horizontal.png' | asset_url }}" alt="AyuPain Pain Relief Oil" width="60" height="40" loading="lazy">
     </div>
     <div class="aayu-sales-info">
       <div class="aayu-sales-header">
-        <span class="aayu-sales-buyer" id="aayu-buyer-name">Ramesh P.</span>
-        <span class="aayu-sales-badge">✓ Verified Order</span>
+        <span class="aayu-sales-buyer" id="aayu-buyer-title">Ramesh (Jaipur)</span>
+        <span class="aayu-sales-badge" id="aayu-badge-text">✓ Verified</span>
       </div>
-      <p class="aayu-sales-detail">
-        Purchased <strong id="aayu-product-qty">2x AyuPain Relief Oil</strong>
+      <p class="aayu-sales-detail" id="aayu-action-text">
+        purchased <strong>Pain Relief Oil</strong>
       </p>
       <div class="aayu-sales-footer">
-        <span class="aayu-sales-location" id="aayu-buyer-location">📍 Jaipur, Rajasthan</span>
         <span class="aayu-sales-time" id="aayu-order-time">3 mins ago</span>
       </div>
     </div>
@@ -32,21 +31,21 @@
     position: fixed;
     bottom: 85px; /* Safely floats above mobile & desktop sticky COD / buy bars */
     left: 14px;
-    z-index: 999990; /* High z-index but behind modal popups */
-    width: 310px;
+    z-index: 999990;
+    width: 290px;
     max-width: calc(100vw - 28px);
     background: #ffffff;
-    border-radius: 12px;
-    padding: 10px 12px;
-    box-shadow: 0 8px 24px rgba(14, 90, 54, 0.18), 0 2px 6px rgba(0, 0, 0, 0.08);
-    border: 1px solid rgba(14, 90, 54, 0.15);
+    border-radius: 10px;
+    padding: 9px 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12), 0 2px 5px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e5e7eb;
     border-left: 4px solid #0e5a36;
     display: flex;
     align-items: center;
     visibility: hidden;
     opacity: 0;
-    transform: translateY(20px) scale(0.95);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(15px);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     pointer-events: none;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
@@ -54,27 +53,26 @@
   .aayu-sales-toast.aayu-toast-visible {
     visibility: visible;
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
     pointer-events: auto;
   }
 
   .aayu-sales-close {
     position: absolute;
     top: 4px;
-    right: 8px;
+    right: 6px;
     background: none;
     border: none;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1;
     color: #9ca3af;
     cursor: pointer;
-    padding: 2px 6px;
+    padding: 2px 5px;
     border-radius: 50%;
-    transition: color 0.2s ease, background 0.2s ease;
   }
 
   .aayu-sales-close:hover {
-    color: #1f2937;
+    color: #111827;
     background: #f3f4f6;
   }
 
@@ -86,22 +84,23 @@
   }
 
   .aayu-sales-img-wrap {
-    width: 46px;
-    height: 46px;
+    width: 44px;
+    height: 44px;
     flex-shrink: 0;
-    border-radius: 8px;
+    border-radius: 6px;
     overflow: hidden;
-    background: #f4f8f5;
+    background: #f8faf9;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #e5e7eb;
+    border: 1px solid #f0f0f0;
   }
 
   .aayu-sales-img-wrap img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    padding: 2px;
   }
 
   .aayu-sales-info {
@@ -113,12 +112,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 6px;
+    gap: 4px;
     margin-bottom: 2px;
   }
 
   .aayu-sales-buyer {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     color: #0e5a36;
     white-space: nowrap;
@@ -131,15 +130,15 @@
     font-weight: 600;
     color: #0e5a36;
     background: #e6f4ed;
-    padding: 1px 6px;
-    border-radius: 10px;
+    padding: 1px 5px;
+    border-radius: 8px;
     white-space: nowrap;
   }
 
   .aayu-sales-detail {
     font-size: 12px;
     color: #374151;
-    margin: 0 0 3px 0;
+    margin: 0 0 2px 0;
     line-height: 1.3;
     white-space: nowrap;
     overflow: hidden;
@@ -148,54 +147,42 @@
 
   .aayu-sales-detail strong {
     color: #111827;
-    font-weight: 600;
+    font-weight: 700;
   }
 
   .aayu-sales-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 11px;
-    color: #6b7280;
+    font-size: 10px;
+    color: #888888;
   }
 
-  .aayu-sales-location {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .aayu-sales-time {
-    font-weight: 500;
-    color: #9ca3af;
-  }
-
-  /* Desktop View */
   @media screen and (min-width: 750px) {
     .aayu-sales-toast {
       bottom: 24px;
       left: 24px;
-      width: 320px;
+      width: 300px;
     }
   }
 </style>
 
 <script>
   (function() {
-    // 12 Authentic Verified Purchase Notifications
+    // Alternating English and Hindi Clean Purchase Notifications
     const salesData = [
-      { name: "Ramesh P.", location: "📍 Jaipur, Rajasthan", qty: "2x AyuPain Relief Oil", time: "3 mins ago" },
-      { name: "Sunita Devi", location: "📍 Lucknow, UP", qty: "3x AyuPain Relief Oil (Family Pack)", time: "7 mins ago" },
-      { name: "Vikram Sharma", location: "📍 Bengaluru, Karnataka", qty: "1x AyuPain Relief Oil", time: "11 mins ago" },
-      { name: "Gurpreet Singh", location: "📍 Ludhiana, Punjab", qty: "2x AyuPain Relief Oil", time: "16 mins ago" },
-      { name: "Meenakshi R.", location: "📍 Chennai, Tamil Nadu", qty: "1x AyuPain Relief Oil", time: "22 mins ago" },
-      { name: "Rajesh Verma", location: "📍 Indore, MP", qty: "3x AyuPain Relief Oil", time: "28 mins ago" },
-      { name: "Anita Kulkarni", location: "📍 Pune, Maharashtra", qty: "2x AyuPain Relief Oil", time: "34 mins ago" },
-      { name: "Suresh Patel", location: "📍 Ahmedabad, Gujarat", qty: "1x AyuPain Relief Oil", time: "41 mins ago" },
-      { name: "Amitabh Bannerjee", location: "📍 Kolkata, WB", qty: "2x AyuPain Relief Oil", time: "49 mins ago" },
-      { name: "Deepak Yadav", location: "📍 Gurugram, Haryana", qty: "3x AyuPain Relief Oil", time: "55 mins ago" },
-      { name: "Priya Nair", location: "📍 Kochi, Kerala", qty: "1x AyuPain Relief Oil", time: "1 hour ago" },
-      { name: "Mahesh Kumar", location: "📍 Patna, Bihar", qty: "2x AyuPain Relief Oil", time: "1 hour ago" }
+      { title: "Ramesh (Jaipur)", action: "purchased <strong>Pain Relief Oil</strong>", badge: "✓ Verified", time: "3 mins ago" },
+      { title: "सुनीता (लखनऊ)", action: "ने खरीदा <strong>Pain Relief Oil</strong>", badge: "✓ सत्यापित", time: "7 मिनट पहले" },
+      { title: "Vikram (Bengaluru)", action: "purchased <strong>Pain Relief Oil</strong>", badge: "✓ Verified", time: "12 mins ago" },
+      { title: "गुरप्रीत (लुधियाना)", action: "ने खरीदा <strong>Pain Relief Oil</strong>", badge: "✓ सत्यापित", time: "18 मिनट पहले" },
+      { title: "Meenakshi (Chennai)", action: "purchased <strong>Pain Relief Oil</strong>", badge: "✓ Verified", time: "25 mins ago" },
+      { title: "राजेश (इंदौर)", action: "ने खरीदा <strong>Pain Relief Oil</strong>", badge: "✓ सत्यापित", time: "32 मिनट पहले" },
+      { title: "Anita (Pune)", action: "purchased <strong>Pain Relief Oil</strong>", badge: "✓ Verified", time: "40 mins ago" },
+      { title: "सुरेश (अहमदाबाद)", action: "ने खरीदा <strong>Pain Relief Oil</strong>", badge: "✓ सत्यापित", time: "48 मिनट पहले" },
+      { title: "Amitabh (Kolkata)", action: "purchased <strong>Pain Relief Oil</strong>", badge: "✓ Verified", time: "55 mins ago" },
+      { title: "दीपक (गुरुग्राम)", action: "ने खरीदा <strong>Pain Relief Oil</strong>", badge: "✓ सत्यापित", time: "1 घंटा पहले" },
+      { title: "Priya (Kochi)", action: "purchased <strong>Pain Relief Oil</strong>", badge: "✓ Verified", time: "1 hour ago" },
+      { title: "महेश (पटना)", action: "ने खरीदा <strong>Pain Relief Oil</strong>", badge: "✓ सत्यापित", time: "1 घंटा पहले" }
     ];
 
     let currentIndex = 0;
@@ -203,16 +190,15 @@
     let cycleInterval = null;
     let isDismissed = false;
 
-    // Check if user dismissed notifications in current session
     if (sessionStorage.getItem('aayu_sales_toast_dismissed') === 'true') {
       return;
     }
 
     const toastEl = document.getElementById('aayu-sales-toast');
     const closeBtn = document.getElementById('aayu-sales-close-btn');
-    const buyerNameEl = document.getElementById('aayu-buyer-name');
-    const buyerLocEl = document.getElementById('aayu-buyer-location');
-    const productQtyEl = document.getElementById('aayu-product-qty');
+    const buyerTitleEl = document.getElementById('aayu-buyer-title');
+    const badgeTextEl = document.getElementById('aayu-badge-text');
+    const actionTextEl = document.getElementById('aayu-action-text');
     const orderTimeEl = document.getElementById('aayu-order-time');
 
     if (!toastEl) return;
@@ -221,21 +207,19 @@
       if (isDismissed) return;
 
       const currentItem = salesData[currentIndex];
-      buyerNameEl.textContent = currentItem.name;
-      buyerLocEl.textContent = currentItem.location;
-      productQtyEl.textContent = currentItem.qty;
+      buyerTitleEl.textContent = currentItem.title;
+      badgeTextEl.textContent = currentItem.badge;
+      actionTextEl.innerHTML = currentItem.action;
       orderTimeEl.textContent = currentItem.time;
 
       toastEl.classList.add('aayu-toast-visible');
 
-      // Hide after 4.5 seconds
       toastTimeout = setTimeout(() => {
         toastEl.classList.remove('aayu-toast-visible');
         currentIndex = (currentIndex + 1) % salesData.length;
       }, 4500);
     }
 
-    // Dismiss Handler
     closeBtn.addEventListener('click', function() {
       isDismissed = true;
       toastEl.classList.remove('aayu-toast-visible');
@@ -244,7 +228,6 @@
       sessionStorage.setItem('aayu_sales_toast_dismissed', 'true');
     });
 
-    // Start Popups 3 seconds after page load, then cycle every 10 seconds
     setTimeout(() => {
       showNotification();
       cycleInterval = setInterval(showNotification, 10500);
