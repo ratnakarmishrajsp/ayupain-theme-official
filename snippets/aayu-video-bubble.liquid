@@ -274,19 +274,19 @@
   .aayu-vmodal-card {
     position: relative !important;
     z-index: 2 !important;
-    width: 100% !important;
-    max-width: 350px !important;
-    height: 78vh !important;
-    max-height: 620px !important;
+    width: 92vw !important;
+    max-width: 640px !important;
+    height: auto !important;
+    max-height: 85vh !important;
     background: #000000 !important;
-    border-radius: 20px !important;
+    border-radius: 16px !important;
     overflow: hidden !important;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8) !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85) !important;
     display: flex !important;
     flex-direction: column !important;
     transform: scale(0.9) !important;
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
   }
 
   .aayu-vmodal-overlay.is-active .aayu-vmodal-card {
@@ -300,7 +300,7 @@
     left: 0 !important;
     right: 0 !important;
     z-index: 10 !important;
-    padding: 14px 16px !important;
+    padding: 12px 14px !important;
     background: linear-gradient(to bottom, rgba(0,0,0,0.85), rgba(0,0,0,0)) !important;
     display: flex !important;
     align-items: center !important;
@@ -362,18 +362,20 @@
 
   /* VIDEO BOX */
   .aayu-vmodal-video-box {
-    flex: 1 !important;
     position: relative !important;
     width: 100% !important;
-    height: 100% !important;
+    aspect-ratio: 16 / 9 !important;
     cursor: pointer !important;
     background: #000 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 
   .aayu-vmodal-video {
     width: 100% !important;
     height: 100% !important;
-    object-fit: cover !important;
+    object-fit: contain !important;
     display: block !important;
   }
 
