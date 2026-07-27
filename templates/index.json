@@ -240,6 +240,19 @@
         "whatsapp_number": "919876543210",
         "phone_number": "+919876543210"
       }
+    },
+    "video_bubble": {
+      "type": "custom-video-bubble",
+      "settings": {
+        "enable_bubble": true,
+        "position": "bottom-left",
+        "video_url_mp4": "https://cdn.shopify.com/videos/c/o/v/581efd3353af4b15aaaf70e74c778b0b.mp4",
+        "bubble_label": "Watch Review",
+        "badge_text": "Verified Customer",
+        "heading": "Yupain™ Pain Relief Oil",
+        "subheading": "See how Yupain™ provides fast joint & back pain relief!",
+        "button_text": "ORDER NOW - CASH ON DELIVERY"
+      }
     }
   },
   "order": [
@@ -250,6 +263,7 @@
     "application_guide",
     "patient_reviews",
     "faq",
-    "floating_support"
+    "floating_support",
+    "video_bubble"
   ]
 }

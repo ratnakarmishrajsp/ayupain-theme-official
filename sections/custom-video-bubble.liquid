@@ -1,0 +1,699 @@
+{% comment %}
+  AayuPain - Custom Interactive Video Bubble & Reel Popup Widget
+{% endcomment %}
+
+{% if section.settings.enable_bubble %}
+  {% assign video_src = '' %}
+  {% if section.settings.video_url_mp4 != blank %}
+    {% assign video_src = section.settings.video_url_mp4 %}
+  {% elsif section.settings.shopify_video != blank %}
+    {% assign video_src = section.settings.shopify_video.sources[1].url | default: section.settings.shopify_video.sources[0].url %}
+  {% endif %}
+
+  {% assign poster_src = '' %}
+  {% if section.settings.cover_image != blank %}
+    {% assign poster_src = section.settings.cover_image | image_url: width: 600 %}
+  {% elsif section.settings.shopify_video.preview_image != blank %}
+    {% assign poster_src = section.settings.shopify_video.preview_image | image_url: width: 600 %}
+  {% endif %}
+
+  <!-- FLOATING VIDEO BUBBLE CONTAINER -->
+  <div 
+    class="aayu-video-bubble-wrapper aayu-position-{{ section.settings.position }}"
+    id="AayuVideoBubble-{{ section.id }}"
+    data-section-id="{{ section.id }}"
+  >
+    <!-- BUBBLE TRIGGER BUTTON -->
+    <button 
+      type="button" 
+      class="aayu-video-bubble-trigger" 
+      id="AayuBubbleTrigger-{{ section.id }}"
+      aria-label="{{ section.settings.bubble_label | escape }}"
+      onclick="openAayuVideoModal('{{ section.id }}')"
+    >
+      <div class="aayu-bubble-media-ring">
+        {% if video_src != blank %}
+          <video 
+            class="aayu-bubble-preview-video" 
+            src="{{ video_src }}" 
+            poster="{{ poster_src }}" 
+            autoplay 
+            muted 
+            loop 
+            playsinline 
+            aria-hidden="true"
+          ></video>
+        {% elsif poster_src != blank %}
+          <img src="{{ poster_src }}" alt="{{ section.settings.bubble_label | escape }}" class="aayu-bubble-preview-img" width="80" height="80" loading="lazy">
+        {% else %}
+          <div class="aayu-bubble-placeholder">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        {% endif %}
+
+        <!-- ANIMATED PLAY BADGE -->
+        <span class="aayu-bubble-play-icon">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </span>
+      </div>
+
+      {% if section.settings.bubble_label != blank %}
+        <span class="aayu-bubble-pill-label">
+          <span class="aayu-pulse-dot"></span>
+          {{ section.settings.bubble_label }}
+        </span>
+      {% endif %}
+
+      <!-- CLOSE BUBBLE (X) -->
+      <span 
+        class="aayu-bubble-dismiss-btn" 
+        title="Dismiss" 
+        onclick="dismissAayuVideoBubble(event, '{{ section.id }}')"
+      >&times;</span>
+    </button>
+  </div>
+
+  <!-- FULLSCREEN VIDEO MODAL / REEL POPUP -->
+  <div 
+    class="aayu-video-modal-overlay" 
+    id="AayuVideoModal-{{ section.id }}" 
+    aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+  >
+    <div class="aayu-video-modal-backdrop" onclick="closeAayuVideoModal('{{ section.id }}')"></div>
+
+    <div class="aayu-video-modal-card">
+      <!-- TOP ACTION BAR -->
+      <div class="aayu-modal-header">
+        <div class="aayu-modal-user-info">
+          {% if section.settings.badge_text != blank %}
+            <span class="aayu-modal-badge">{{ section.settings.badge_text }}</span>
+          {% endif %}
+          <span class="aayu-modal-author-title">{{ section.settings.heading | escape }}</span>
+        </div>
+
+        <div class="aayu-modal-actions">
+          <!-- SOUND TOGGLE -->
+          <button 
+            type="button" 
+            class="aayu-modal-sound-btn" 
+            id="AayuSoundBtn-{{ section.id }}" 
+            onclick="toggleAayuVideoSound('{{ section.id }}')"
+            aria-label="Toggle Mute"
+          >
+            <!-- MUTED ICON -->
+            <svg class="icon-muted" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+            <!-- UNMUTED ICON -->
+            <svg class="icon-unmuted" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          </button>
+
+          <!-- CLOSE MODAL BUTTON -->
+          <button 
+            type="button" 
+            class="aayu-modal-close-btn" 
+            onclick="closeAayuVideoModal('{{ section.id }}')"
+            aria-label="Close modal"
+          >&times;</button>
+        </div>
+      </div>
+
+      <!-- MAIN VIDEO CONTAINER -->
+      <div class="aayu-modal-video-wrapper" onclick="toggleAayuVideoPlay('{{ section.id }}')">
+        {% if video_src != blank %}
+          <video 
+            class="aayu-modal-main-video" 
+            id="AayuMainVideo-{{ section.id }}"
+            src="{{ video_src }}" 
+            poster="{{ poster_src }}" 
+            playsinline 
+            loop
+          ></video>
+        {% elsif poster_src != blank %}
+          <img src="{{ poster_src }}" alt="{{ section.settings.heading | escape }}" class="aayu-modal-fallback-img">
+        {% endif %}
+
+        <!-- PLAY/PAUSE OVERLAY ANIMATION -->
+        <div class="aayu-video-play-state-indicator" id="AayuPlayIndicator-{{ section.id }}">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </div>
+
+      <!-- BOTTOM PRODUCT CTA BAR -->
+      {% if section.settings.product_link != blank or section.settings.button_text != blank or section.settings.subheading != blank %}
+        <div class="aayu-modal-footer">
+          {% if section.settings.subheading != blank %}
+            <p class="aayu-modal-subheading">{{ section.settings.subheading }}</p>
+          {% endif %}
+
+          {% if section.settings.button_text != blank %}
+            <a 
+              href="{{ section.settings.product_link | default: '#' }}" 
+              class="aayu-modal-cta-btn"
+            >
+              <span>{{ section.settings.button_text }}</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <style>
+    /* FLOATING VIDEO BUBBLE STYLES */
+    .aayu-video-bubble-wrapper {
+      position: fixed;
+      z-index: 2147483640;
+      bottom: 90px;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .aayu-video-bubble-wrapper.aayu-position-bottom-left {
+      left: 18px;
+    }
+    .aayu-video-bubble-wrapper.aayu-position-bottom-right {
+      right: 18px;
+    }
+
+    @media (max-width: 768px) {
+      .aayu-video-bubble-wrapper {
+        bottom: 110px; /* Offset to clear floating WhatsApp or sticky buy bar */
+      }
+      .aayu-video-bubble-wrapper.aayu-position-bottom-left {
+        left: 14px;
+      }
+      .aayu-video-bubble-wrapper.aayu-position-bottom-right {
+        right: 14px;
+      }
+    }
+
+    .aayu-video-bubble-trigger {
+      background: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .aayu-bubble-media-ring {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      position: relative;
+      padding: 3px;
+      background: linear-gradient(135deg, #ff416c, #ff4b2b, #8a2be2);
+      background-size: 200% 200%;
+      animation: aayuGradientRing 3s ease infinite;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      transition: transform 0.25s ease;
+    }
+
+    @keyframes aayuGradientRing {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .aayu-video-bubble-trigger:hover .aayu-bubble-media-ring {
+      transform: scale(1.08);
+    }
+
+    .aayu-bubble-preview-video,
+    .aayu-bubble-preview-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      background: #000;
+    }
+
+    .aayu-bubble-placeholder {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: #111;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .aayu-bubble-play-icon {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      background: #1b4332;
+      color: #ffffff;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    .aayu-bubble-pill-label {
+      margin-top: 6px;
+      background: rgba(15, 23, 42, 0.9);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      border: 1px solid rgba(255,255,255,0.15);
+      letter-spacing: 0.2px;
+    }
+
+    .aayu-pulse-dot {
+      width: 6px;
+      height: 6px;
+      background-color: #22c55e;
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 0 8px #22c55e;
+      animation: aayuPulse 1.5s infinite;
+    }
+
+    @keyframes aayuPulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+    }
+
+    .aayu-bubble-dismiss-btn {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: #111827;
+      color: #9ca3af;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      font-size: 14px;
+      line-height: 18px;
+      text-align: center;
+      border: 1.5px solid #374151;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.2s ease, color 0.2s ease;
+    }
+
+    .aayu-video-bubble-trigger:hover .aayu-bubble-dismiss-btn {
+      opacity: 1;
+    }
+
+    .aayu-bubble-dismiss-btn:hover {
+      color: #ffffff;
+      background: #ef4444;
+      border-color: #ef4444;
+    }
+
+    /* FULLSCREEN MODAL OVERLAY */
+    .aayu-video-modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2147483647;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      padding: 16px;
+    }
+
+    .aayu-video-modal-overlay.is-active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .aayu-video-modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(6px);
+    }
+
+    .aayu-video-modal-card {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 360px;
+      height: 80vh;
+      max-height: 640px;
+      background: #000000;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      transform: scale(0.92);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .aayu-video-modal-overlay.is-active .aayu-video-modal-card {
+      transform: scale(1);
+    }
+
+    /* MODAL HEADER */
+    .aayu-modal-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      padding: 16px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .aayu-modal-user-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .aayu-modal-badge {
+      background: #1b4332;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .aayu-modal-author-title {
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 600;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    }
+
+    .aayu-modal-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .aayu-modal-sound-btn,
+    .aayu-modal-close-btn {
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      border: none;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      font-size: 20px;
+      line-height: 1;
+      transition: background 0.2s ease;
+    }
+
+    .aayu-modal-sound-btn:hover,
+    .aayu-modal-close-btn:hover {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    /* VIDEO WRAPPER */
+    .aayu-modal-video-wrapper {
+      flex: 1;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .aayu-modal-main-video,
+    .aayu-modal-fallback-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .aayu-video-play-state-indicator {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.7);
+      background: rgba(0, 0, 0, 0.5);
+      color: #ffffff;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .aayu-video-play-state-indicator.is-visible {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    /* MODAL FOOTER */
+    .aayu-modal-footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      padding: 20px 16px;
+      background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.4) 70%, rgba(0,0,0,0));
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .aayu-modal-subheading {
+      color: #e2e8f0;
+      font-size: 13px;
+      line-height: 1.4;
+      margin: 0;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    }
+
+    .aayu-modal-cta-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #1b4332;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 12px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(27, 67, 50, 0.6);
+      transition: transform 0.2s ease, background-color 0.2s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .aayu-modal-cta-btn:hover {
+      background: #2d6a4f;
+      transform: translateY(-2px);
+      color: #ffffff;
+    }
+  </style>
+
+  <script>
+    function openAayuVideoModal(sectionId) {
+      const modal = document.getElementById('AayuVideoModal-' + sectionId);
+      const video = document.getElementById('AayuMainVideo-' + sectionId);
+      if (modal) {
+        modal.classList.add('is-active');
+        document.body.style.overflow = 'hidden';
+        if (video) {
+          video.currentTime = 0;
+          video.play().catch(e => console.log('Autoplay blocked:', e));
+        }
+      }
+    }
+
+    function closeAayuVideoModal(sectionId) {
+      const modal = document.getElementById('AayuVideoModal-' + sectionId);
+      const video = document.getElementById('AayuMainVideo-' + sectionId);
+      if (modal) {
+        modal.classList.remove('is-active');
+        document.body.style.overflow = '';
+        if (video) {
+          video.pause();
+        }
+      }
+    }
+
+    function toggleAayuVideoPlay(sectionId) {
+      const video = document.getElementById('AayuMainVideo-' + sectionId);
+      const indicator = document.getElementById('AayuPlayIndicator-' + sectionId);
+      if (!video) return;
+
+      if (video.paused) {
+        video.play();
+        if (indicator) {
+          indicator.innerHTML = '<svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+          showPlayIndicator(indicator);
+        }
+      } else {
+        video.pause();
+        if (indicator) {
+          indicator.innerHTML = '<svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+          showPlayIndicator(indicator);
+        }
+      }
+    }
+
+    function showPlayIndicator(indicator) {
+      indicator.classList.add('is-visible');
+      setTimeout(() => {
+        indicator.classList.remove('is-visible');
+      }, 700);
+    }
+
+    function toggleAayuVideoSound(sectionId) {
+      const video = document.getElementById('AayuMainVideo-' + sectionId);
+      const soundBtn = document.getElementById('AayuSoundBtn-' + sectionId);
+      if (!video || !soundBtn) return;
+
+      const iconMuted = soundBtn.querySelector('.icon-muted');
+      const iconUnmuted = soundBtn.querySelector('.icon-unmuted');
+
+      video.muted = !video.muted;
+
+      if (video.muted) {
+        if (iconMuted) iconMuted.style.display = 'block';
+        if (iconUnmuted) iconUnmuted.style.display = 'none';
+      } else {
+        if (iconMuted) iconMuted.style.display = 'none';
+        if (iconUnmuted) iconUnmuted.style.display = 'block';
+      }
+    }
+
+    function dismissAayuVideoBubble(event, sectionId) {
+      event.stopPropagation();
+      const bubble = document.getElementById('AayuVideoBubble-' + sectionId);
+      if (bubble) {
+        bubble.style.display = 'none';
+      }
+    }
+  </script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Floating Video Bubble",
+  "target": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_bubble",
+      "label": "Enable Video Bubble",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "Bubble Position",
+      "options": [
+        {
+          "value": "bottom-left",
+          "label": "Bottom Left"
+        },
+        {
+          "value": "bottom-right",
+          "label": "Bottom Right"
+        }
+      ],
+      "default": "bottom-left"
+    },
+    {
+      "type": "video",
+      "id": "shopify_video",
+      "label": "Shopify Hosted Video",
+      "info": "Upload an H.264 encoded MP4 video via Shopify Files."
+    },
+    {
+      "type": "text",
+      "id": "video_url_mp4",
+      "label": "External MP4 Video URL (Fallback)",
+      "info": "Direct .mp4 link if not using Shopify uploaded video."
+    },
+    {
+      "type": "image_picker",
+      "id": "cover_image",
+      "label": "Cover / Poster Image"
+    },
+    {
+      "type": "text",
+      "id": "bubble_label",
+      "label": "Bubble Text Label",
+      "default": "Watch Review"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Modal Badge Text",
+      "default": "Verified Customer"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Modal Video Title",
+      "default": "Yupain™ Pain Relief Oil"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Modal Description / Review",
+      "default": "Watch how Yupain™ provides instant relief from joint and back pain!"
+    },
+    {
+      "type": "url",
+      "id": "product_link",
+      "label": "Product CTA Link"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "CTA Button Label",
+      "default": "ORDER NOW - CASH ON DELIVERY"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Floating Video Bubble"
+    }
+  ]
+}
+{% endschema %}
